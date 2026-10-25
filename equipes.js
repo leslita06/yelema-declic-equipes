@@ -4,6 +4,10 @@
 (function(){
 const D = window.DECLIC;
 
+// Libellés courts des heures, pour tenir sur une ligne au téléphone.
+const COURT = { t1: '< 1 h', t2: '1-3 h', t3: '3-5 h', t4: '5-10 h', t5: '10 h +' };
+D.temps.forEach(x => x.court = COURT[x.id] || x.label);
+
 D.fonctions = [
   {
     id: "commercial", icone: "trending-up", nom: "Commercial et ventes", titre: "De la cible à la vente signée",

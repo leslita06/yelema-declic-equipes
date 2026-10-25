@@ -361,6 +361,36 @@ footer{padding:22px 0 30px;color:var(--grey2);font-size:12px;text-transform:uppe
 @media (max-width:860px){.fcts,.secs{grid-template-columns:1fr}.team{grid-template-columns:1fr 1fr}.pdf{grid-template-columns:1fr}.tm.orch{grid-template-columns:1fr}.tm.orch ul{grid-template-columns:1fr}}
 @media (max-width:560px){.team{grid-template-columns:1fr}.fct-eq small{display:none}.fct-eq img{width:44px;height:44px}}
 @media print{.top,footer,.nav,.pdf,.offer .btn,#err{display:none!important}body{background:#fff}.sx,.tm,.pain,.kpi{break-inside:avoid;box-shadow:none;border:1px solid #ddd}*{animation:none!important;transition:none!important}}
+
+/* Téléphone (25/10/26, msg 59649) : moins de hauteur, rien d'écrasé */
+.hb .sm{display:none}
+@media (max-width:560px){
+  .hero{padding:20px 0 34px;border-radius:0 0 28px 28px}.hero .in{gap:8px}.hero .in > div:last-child{order:-1}.bloom{max-width:132px!important}
+  .hero h1{font-size:34px;margin:8px 0 12px}.hero p{font-size:17px;margin-bottom:22px}.perks{gap:8px}
+  .q-h{display:none}.fil-n{margin-bottom:10px}.screen h2{font-size:24px;line-height:1.15}.lede{font-size:15.5px}
+  .hours{grid-template-columns:repeat(5,1fr)!important;gap:6px}.task.sel .hours{padding:0 12px 14px}
+  .hb{padding:10px 2px;font-size:13.5px;border-radius:11px}.hb .lg{display:none}.hb .sm{display:inline}
+  .task-row{padding:14px}.grp-h{margin:16px 0 8px}
+  .rank{padding:14px}.rank li{display:grid;grid-template-columns:30px 1fr 34px;grid-template-areas:"n l up" "n l dn";gap:4px 10px;padding:8px 10px}
+  .rank li .grip,.rank li .rk-x{display:none}.rank li .n{grid-area:n}.rank li .l{grid-area:l;font-size:14.5px}
+  .rank li .mv{width:34px;height:28px}.rank li .mv[data-mv="-1"]{grid-area:up}.rank li .mv[data-mv="1"]{grid-area:dn}
+  .fct{padding:14px;gap:10px}.fct-h .t{font-size:16.5px}
+  .nav.fin{position:static;background:none;border:0;margin:20px 0 0;padding:0}
+  .r-hero{padding:22px}.kpis{gap:10px}
+  .pains{gap:10px}.pain{padding:16px;gap:8px}.pain p{font-size:14px}
+  .team{gap:10px}.tm{padding:14px;gap:8px}.tm-h img{width:46px;height:46px}.tm h4{font-size:17px}
+  .tm ul{font-size:13.5px}
+  .tm.calme ul{display:none}
+  .secs{gap:10px}.sx{padding:16px;gap:10px}
+  .sx-h{flex-wrap:wrap}.sx-h b{flex:1 1 60%;font-size:15px}.sx-h .nv{order:3}
+  .sx p{font-size:14px}
+  .pdf{padding:20px;gap:12px}.pdf-ic{width:52px;height:52px;border-radius:16px}.pdf h3{font-size:20px}
+  .pdf-f .btn{flex:1 1 100%;justify-content:center}.pdf-f .em{flex:1 1 100%;justify-content:center}
+  .offer{padding:22px;border-radius:24px}.offer h3{font-size:24px}
+  .sec-t{font-size:21px;margin-top:30px}
+  .kpis{grid-template-columns:repeat(3,1fr)!important;gap:8px}.kpi{flex-direction:column;align-items:flex-start;padding:12px;gap:4px}.kpi .chip{display:none}.kpi b{font-size:26px}.kpi div > span{font-size:12.5px;line-height:1.3;display:block}
+  .ring{width:150px!important;height:150px!important}.r-hero h2{font-size:24px}
+}
 </style>
 </head>
 <body>
@@ -425,7 +455,7 @@ function fil(){
   const s = SEC_DE[ECRANS[pos]]; if (!s) return '';
   return `<div class="fil">${SECTIONS.map((n, i) => `<span class="${i + 1 < s ? 'ok' : i + 1 === s ? 'on' : ''}" title="${esc(n)}"></span>`).join('')}</div><div class="fil-n"><b>${s}. ${SECTIONS[s - 1]}</b></div>`;
 }
-const tete = (icone, titre, lede) => `<div class="wrap">${fil()}<div class="q-h"><div class="q-ic">${ic(icone)}</div></div><h2>${titre}</h2><p class="lede">${lede}</p>`;
+const tete = (icone, titre, lede) => `<div class="wrap">${fil()}<div class="q-h"><div class="q-ic">${ic(icone)}</div></div><h2>${titre.replace(/ ([?!:])/g, '\u00a0$1')}</h2><p class="lede">${lede}</p>`;
 const carte = (attr, val, icone, label, sel, sous) => `<button class="card ${sel ? 'sel' : ''}" data-${attr}="${esc(val)}"><span class="tick">${ic('check')}</span><span class="chip">${ic(icone)}</span><span class="t">${label}</span>${sous ? `<span class="s">${sous}</span>` : ''}</button>`;
 const echelle = (cle, opts, val) => `<div class="scale">${opts.map((r, i) => `<button class="sc ${val === i ? 'on' : ''}" data-q="${cle}" data-v="${i}"><span class="dots">${[0,1,2,3].map(j => `<i class="${j <= i ? 'f' : ''}"></i>`).join('')}</span>${r}</button>`).join('')}</div>`;
 const mq = q => `<div class="mq"><h3><span class="chip">${ic(q.icone)}</span>${q.question}</h3>${echelle(q.id, q.reponses, st.mat[q.id])}</div>`;
@@ -435,7 +465,7 @@ const VUES = {
   accueil: () => `<div class="hero" style="margin-top:-40px"><div class="wrap in">
       <div><div class="eyebrow">Le Déclic, par Yelema</div>
         <h1>Voyez où votre entreprise <em>perd du temps</em>.</h1>
-        <p>Cinq minutes de clics, en sept étapes. Le Déclic repère les tâches les plus pénibles de votre fonction, mesure le temps qu'elles vous coûtent, note votre maturité IA section par section et vous présente l'équipe d'Experts IA qui reprend le travail.</p>
+        <p>Repérez vos tâches les plus pénibles, mesurez le temps qu'elles vous coûtent et découvrez l'équipe d'Experts IA qui les reprend.</p>
         <button class="btn btn-p btn-big" data-a="suiv">${ic('sparkles')} Faire mon Déclic</button>
         <div class="perks"><span>${ic('timer')} 5 minutes</span><span>${ic('gauge')} Résultat immédiat</span><span>${ic('file-text')} Votre plan en PDF</span></div>
       </div>
@@ -474,7 +504,7 @@ const VUES = {
       <span class="fct-eq">${f.equipe.map(e => `<span class="m"><img src="${ph(e.photo)}" alt=""><b>${e.prenom}</b><small>${e.role}</small></span>`).join('')}</span></button>`).join('')}</div>` + nav() + '</div>',
 
   taches: () => { const f = fct();
-    const heures = tid => `<div class="hours"><span class="lab">${ic('clock')} Temps perdu chaque semaine, pour toute l'équipe</span>${D.temps.map(x => `<button class="hb ${st.taches[tid] === x.heures ? 'on' : ''}" data-h="${x.heures}" data-tt="${tid}">${x.label}</button>`).join('')}</div>`;
+    const heures = tid => `<div class="hours"><span class="lab">${ic('clock')} Temps perdu chaque semaine, pour toute l'équipe</span>${D.temps.map(x => `<button class="hb ${st.taches[tid] === x.heures ? 'on' : ''}" data-h="${x.heures}" data-tt="${tid}"><span class="lg">${x.label}</span><span class="sm">${x.court}</span></button>`).join('')}</div>`;
     const ligne = t => `<div class="task ${t.id in st.taches ? 'sel' : ''}" data-t="${t.id}">
         <button class="task-row" data-tache="${t.id}"><span class="box">${ic('check')}</span><span class="l">${t.label}</span></button>${heures(t.id)}</div>`;
     return tete(f.icone, 'Qu\'est-ce qui vous fait perdre du temps ?', 'Cochez les tâches qui vous pèsent, dites combien d\'heures elles coûtent chaque semaine, puis classez-les de la plus pénible à la moins pénible.') +
@@ -488,7 +518,7 @@ const VUES = {
       <div class="add-tool"><input id="outil-in" placeholder="Un autre outil ? Ex. Zoho, Perfecto, Saari"><button data-a="addtool">${ic('plus')} Ajouter</button></div></div>` + nav() + '</div>'; },
 
   vision: () => { const s = D.sections[0];
-    return tete(s.icone, 'Où en est l\'IA dans vos priorités ?', s.lede) + s.questions.map(mq).join('') +
+    return tete(s.icone, 'Où en est l\'IA dans vos priorités ?', 'Une question, puis ce que vous attendez d\'abord.') + s.questions.map(mq).join('') +
     `<div class="sub-h">${ic('target')} Qu'attendez-vous d'abord ?</div>
     <div class="cards c3">${D.objectifs.map(o => carte('obj', o.id, o.icone, o.label, st.objectif === o.id)).join('')}</div>` + nav() + '</div>'; },
 
@@ -591,9 +621,9 @@ function resultat(){
         <span class="lvl">${ic('rocket')} ${R.niv.nom}</span><p>${R.niv.texte.replace(/un Expert IA/g, 'votre équipe d\'Experts IA').replace(/Un Expert IA/g, 'Votre équipe d\'Experts IA').replace(/deux Experts IA peuvent/g, 'une équipe d\'Experts IA peut')}</p></div>
     </div>
     <div class="kpis">
-      <div class="kpi k1"><span class="chip">${ic('clock')}</span><div><b><span class="cnt" data-to="${R.total}">0</span><small>h</small></b><span>perdues chaque semaine sur vos tâches cochées</span></div></div>
-      <div class="kpi"><span class="chip">${ic('rotate-ccw')}</span><div><b><span class="cnt" data-to="${R.repris}">0</span><small>h</small></b><span>que votre équipe d'Experts reprend chaque semaine</span></div></div>
-      <div class="kpi"><span class="chip">${ic('calendar')}</span><div><b><span class="cnt" data-to="${R.repris * 4.33 / 8}">0</span><small>jours</small></b><span>de travail rendus à vos équipes chaque mois</span></div></div>
+      <div class="kpi k1"><span class="chip">${ic('clock')}</span><div><b><span class="cnt" data-to="${R.total}">0</span><small>h</small></b><span>perdues par semaine</span></div></div>
+      <div class="kpi"><span class="chip">${ic('rotate-ccw')}</span><div><b><span class="cnt" data-to="${R.repris}">0</span><small>h</small></b><span>reprises par votre équipe</span></div></div>
+      <div class="kpi"><span class="chip">${ic('calendar')}</span><div><b><span class="cnt" data-to="${R.repris * 4.33 / 8}">0</span><small>jours</small></b><span>rendus à vos équipes par mois</span></div></div>
     </div>
 
     <h3 class="sec-t">Vos trois priorités.</h3><p class="sec-l">Les tâches que vous avez classées les plus pénibles, et qui, dans l'équipe, les reprend.</p>
@@ -626,7 +656,7 @@ function resultat(){
       <div class="cta"><div class="stack">${f.equipe.map(e => `<img src="${ph(e.photo)}" alt="${e.prenom}">`).join('')}<img src="${ph('av-chiefofstaff-sq.jpg')}" alt="Djénéba"></div>
         <a class="btn btn-w btn-big" href="https://calendly.com/leslie_mstudio/meeting-with-mstudio" target="_blank" rel="noopener">${ic('calendar')} Réserver ma démonstration</a></div></div>
     <p class="note">Estimation : une équipe d'Experts reprend environ ${Math.round(D.partReprise * 100)} % du temps déclaré ; un mois compte 4,33 semaines et une journée 8 heures. La note de maturité vient de vos réponses aux sections 3 à 6.</p>
-    <div class="nav"><button class="btn btn-g" data-a="refaire">${ic('rotate-ccw')} Modifier mes réponses</button></div></div>`;
+    <div class="nav fin"><button class="btn btn-g" data-a="refaire">${ic('rotate-ccw')} Modifier mes réponses</button></div></div>`;
 }
 
 // Maquette : rien ne part vers Tally ni vers le CRM. L'envoi du PDF par email se branchera à la mise en ligne.
@@ -667,6 +697,7 @@ app.addEventListener('keydown', e => {
 });
 aller(0);
 })();
+
 </script>
 </body>
 </html>
