@@ -403,6 +403,12 @@ footer{padding:22px 0 30px;color:var(--grey2);font-size:12px;text-transform:uppe
   .nav .btn .ic{width:17px;height:17px}
   .nav .btn-p{flex:1;justify-content:center}
 }
+.split{display:grid;gap:8px}
+.cote{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center}
+.cote .cl{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--muted)}
+.cote .cl .ic{width:15px;height:15px}
+.lvl-r .split .opts{grid-template-columns:repeat(5,1fr)}
+@media (max-width:600px){.cote{grid-template-columns:1fr;gap:6px}.lvl-r .split .opts{grid-template-columns:repeat(5,1fr);gap:5px}.lvl-r .split .hb{font-size:12.5px;padding:9px 1px}}
 </style>
 </head>
 <body>
@@ -508,8 +514,8 @@ const VUES = {
 
   equipes: () => tete('map-pin', 'Où travaillent vos équipes ?', 'Les équipes terrain parlent aux Experts par message ou par vocal, depuis leur téléphone.') +
     `<div class="cards c3">${D.equipes.lieu.map(l => carte('lieu', l.id, l.icone, l.label, st.lieu === l.id)).join('')}</div>
-    <div class="sub-h">${ic('users')} Combien de personnes, à peu près, à chaque niveau ? <span style="font-weight:400;color:var(--muted);font-size:14px">(facultatif)</span></div>
-    <div class="levels">${D.equipes.niveaux.map(n => `<div class="lvl-r"><span class="t"><span class="chip">${ic(n.icone)}</span>${n.label}</span><div class="opts">${D.equipes.tranches.map(t => `<button class="hb ${st.effectifs[n.id] === t ? 'on' : ''}" data-eff="${n.id}" data-t="${t}">${t}</button>`).join('')}</div></div>`).join('')}</div>` + nav() + '</div>',
+    <div class="sub-h">${ic('users')} Combien de personnes à chaque niveau, au bureau et sur le terrain ? <span style="font-weight:400;color:var(--muted);font-size:14px">(facultatif)</span></div>
+    <div class="levels">${D.equipes.niveaux.map(n => `<div class="lvl-r"><span class="t"><span class="chip">${ic(n.icone)}</span>${n.label}</span><div class="split">${D.equipes.cotes.map(c => `<div class="cote"><span class="cl">${ic(c.icone)}${c.label}</span><div class="opts">${D.equipes.tranches.map(t => `<button class="hb ${st.effectifs[n.id + '-' + c.id] === t ? 'on' : ''}" data-eff="${n.id}-${c.id}" data-t="${t}">${t}</button>`).join('')}</div></div>`).join('')}</div></div>`).join('')}</div>` + nav() + '</div>',
 
   fonction: () => tete('layers', 'Quelle fonction voulez-vous soulager en premier ?', 'Chaque fonction a son équipe de quatre Experts IA, qui se passent le relais. On commence par celle qui vous coûte le plus.') +
     `<div class="fcts">${D.fonctions.map(f => `<button class="fct ${st.fonction === f.id ? 'sel' : ''}" data-fct="${f.id}"><span class="tick">${ic('check')}</span>

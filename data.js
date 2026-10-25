@@ -62,7 +62,11 @@ window.DECLIC = {
       { id: "man", label: "Managers et cadres", icone: "briefcase" },
       { id: "emp", label: "Employés et agents", icone: "users" }
     ],
-    tranches: ["1 à 5", "6 à 20", "21 à 100", "Plus de 100"]
+    cotes: [
+      { id: "bureau", label: "Au bureau", icone: "building-2" },
+      { id: "terrain", label: "Sur le terrain", icone: "map-pin" }
+    ],
+    tranches: ["0", "1 à 5", "6 à 20", "21 à 100", "100 +"]
   },
   infos: {
     lieux: [
