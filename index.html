@@ -482,6 +482,7 @@ body{background:#F8F7FC}
 .pdf-mode .kpi,.pdf-mode .pain,.pdf-mode .tm,.pdf-mode .sx,.pdf-mode .quote{box-shadow:none}
 .pdf-mode .r-hero::after{display:none}
 .tm .m{align-items:flex-start}.tm .m .ic{margin-top:2px}
+.pdf-err{display:block;margin-top:8px;font-size:13px;color:var(--corail)}
 </style>
 </head>
 <body>
@@ -825,8 +826,11 @@ async function telecharger(b){
       pdf.setFontSize(8); pdf.setTextColor(147, 141, 168); pdf.text(`Le Déclic, par Yelema  |  ${st.profil.entreprise || ''}  |  page ${page}`, M, 297 - 7);
       y = fin;
     }
-    pdf.save('Declic-Yelema-' + (st.profil.entreprise || 'plan').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w]+/g, '-') + '.pdf');
-  } catch (e) { console.error('PDF', e); window.print(); }
+    // Lien de téléchargement direct (vocal 59784) : ni fenêtre d'impression, ni nouvel onglet.
+    const url = URL.createObjectURL(pdf.output('blob')), a = document.createElement('a');
+    a.href = url; a.download = 'Declic-Yelema-' + (st.profil.entreprise || 'plan').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w]+/g, '-') + '.pdf';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);
+  } catch (e) { console.error('PDF', e); b.insertAdjacentHTML('afterend', '<span class="pdf-err">Le PDF n\'a pas pu se préparer, réessayez dans un instant.</span>'); }
   zone.remove(); b.disabled = false; b.innerHTML = lab;
 }
 
