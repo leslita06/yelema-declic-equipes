@@ -556,6 +556,8 @@ function aller(n){
   app.innerHTML = `<section class="screen on">${VUES[nom](arg)}</section>`;
   const s = SEC_DE[ECRANS[pos]], f = nom === 'accueil' ? 0 : s ? (s - 1) / 7 : 1;
   document.getElementById('prog').style.width = (f * 100) + '%'; majMini(f);
+  // Déclic fini : seule la fleur qui tourne reste, pas la petite fleur de l'en-tête (msg 59778-59779).
+  document.getElementById('mini').style.display = nom === 'analyse' || nom === 'resultat' ? 'none' : '';
   document.getElementById('stepn').textContent = nom === 'accueil' ? 'Cinq minutes' : s ? `Section ${s} sur 7` : 'Votre Déclic';
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (APRES[nom]) APRES[nom](arg);
