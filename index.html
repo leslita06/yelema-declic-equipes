@@ -53,6 +53,14 @@ button{font:inherit;cursor:pointer;color:inherit}
 .hero h1{font-size:52px;line-height:1.02;margin:12px 0 16px}
 .hero h1 em{font-style:normal;color:var(--corail)}
 .hero p{color:#4A4560;font-size:19px;margin:0 0 28px}
+.etapes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.etape{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px 24px 22px;box-shadow:0 10px 30px rgba(48,22,103,.06)}
+.etape .n{position:absolute;right:22px;top:18px;font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--lav)}
+.etape .chip{width:46px;height:46px;border-radius:14px;background:var(--vif);color:#fff;display:grid;place-items:center}
+.etape .chip .ic{width:22px;height:22px}
+.etape b{display:block;font-family:'Space Grotesk';font-size:19px;color:var(--indigo);margin-top:14px}
+.etape p{color:var(--muted);font-size:15.5px;margin:6px 0 0}
+@media (max-width:760px){.etapes{grid-template-columns:1fr;gap:12px;margin-top:22px}}
 .perks{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px}
 .perks > span{display:flex;align-items:center;gap:8px;color:var(--indigo);font-weight:500;font-size:15px;background:#fff;border:1px solid var(--line);box-shadow:0 4px 12px rgba(48,22,103,.06);padding:8px 14px;border-radius:999px}
 .perks .ic{width:18px;height:18px;color:var(--violet)}
@@ -590,7 +598,11 @@ const VUES = {
         <div class="floaty" style="right:-18px;top:30%;animation-delay:1.2s"><img src="${ph('av-kouassi-sq.jpg')}" alt="">2. Kouassi relance vos prospects</div>
         <div class="floaty" style="left:-24px;top:58%;animation-delay:2.4s"><img src="${ph('av-sena-sq.jpg')}" alt="">3. Sèna prépare vos propositions</div>
         <div class="floaty" style="right:-6px;bottom:2%;animation-delay:3.6s"><img src="${ph('av-aminata-sq.jpg')}" alt="">4. Aminata suit vos ventes</div>
-      </div></div></div>`,
+      </div></div></div>
+    <div class="wrap etapes">${[['list-checks', 'Vos tâches', 'Choisissez vos fonctions et les tâches qui vous prennent le plus de temps.'],
+      ['clock', 'Votre temps perdu', 'Le Déclic chiffre les heures perdues chaque mois et donne votre note de maturité IA.'],
+      ['users', 'Votre équipe d\'Experts', 'Vous découvrez les Experts qui reprennent ces tâches, et recevez votre plan en PDF.']]
+      .map(([i, t, d], k) => `<div class="etape"><span class="n">${k + 1}</span><span class="chip">${ic(i)}</span><b>${t}</b><p>${d}</p></div>`).join('')}</div>`,
 
   profil: () => { const p = st.profil;
     return tete('user', 'Qui êtes-vous ?', 'Pour adapter le Déclic à votre poste et vous envoyer votre plan.') +
