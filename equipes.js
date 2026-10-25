@@ -12,12 +12,16 @@ D.fonctions = [
   {
     id: "commercial", icone: "trending-up", nom: "Commercial et ventes", titre: "De la cible à la vente signée",
     outils: ["WhatsApp", "Excel", "Gmail", "Outlook", "HubSpot", "Sage", "Odoo", "LinkedIn", "Google Sheets", "Salesforce", "Pipedrive", "Zoho"],
-    volume: { question: "Combien de devis envoyez-vous par mois ?", options: ["Moins de 10", "10 à 50", "50 à 200", "Plus de 200"] },
+    metier: [
+      { id: "q1", icone: "file-text", question: "Combien de devis envoyez-vous par mois ?", options: ["Moins de 10", "10 à 50", "50 à 200", "Plus de 200"] },
+      { id: "q2", icone: "users", question: "Combien de commerciaux dans l'équipe ?", options: ["Aucun", "1 à 3", "4 à 10", "Plus de 10"] },
+      { id: "q3", icone: "user-search", question: "Combien de nouveaux prospects par mois ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] }
+    ],
     equipe: [
-      { id: "seydou", prenom: "Seydou", role: "Veille commerciale", photo: "av-seydou-sq.jpg" },
-      { id: "kouassi", prenom: "Kouassi", role: "Prospection et relances", photo: "av-kouassi-sq.jpg" },
-      { id: "sena", prenom: "Sèna", role: "Qualification et propositions", photo: "av-sena-sq.jpg" },
-      { id: "aminata", prenom: "Aminata", role: "Suivi du pipeline", photo: "av-aminata-sq.jpg" }
+      { id: "seydou", icone: "radar", prenom: "Seydou", role: "Veille commerciale", photo: "av-seydou-sq.jpg" },
+      { id: "kouassi", icone: "send", prenom: "Kouassi", role: "Prospection et relances", photo: "av-kouassi-sq.jpg" },
+      { id: "sena", icone: "file-pen-line", prenom: "Sèna", role: "Qualification et propositions", photo: "av-sena-sq.jpg" },
+      { id: "aminata", icone: "chart-line", prenom: "Aminata", role: "Suivi du pipeline", photo: "av-aminata-sq.jpg" }
     ],
     taches: [
       { id: "c1", par: "kouassi", label: "Relancer les devis restés sans réponse", fait: "Kouassi relance chaque devis avec le ton juste, sans harceler, et vous prévient quand un prospect se réveille." },
@@ -30,18 +34,31 @@ D.fonctions = [
       { id: "c8", par: "kouassi", label: "Prospecter et écrire aux nouveaux clients", fait: "Kouassi écrit le premier message et relance au bon moment, sur le bon canal." },
       { id: "c9", par: "kouassi", label: "Relancer les clients qui n'ont pas racheté", fait: "Kouassi repère les clients inactifs depuis 60 jours et leur propose une offre adaptée." },
       { id: "c10", par: "sena", label: "Répondre aux appels d'offres", fait: "Sèna prépare le dossier de réponse : pièces, références, mémoire technique et prix à valider." },
-      { id: "c11", par: "aminata", label: "Suivre les commerciaux terrain", fait: "Aminata recueille les comptes rendus de visite, par écrit ou par vocal, et met le suivi à jour." }
+      { id: "c11", par: "aminata", label: "Suivre les commerciaux terrain", fait: "Aminata recueille les comptes rendus de visite, par écrit ou par vocal, et met le suivi à jour." },
+      { id: "c12", par: "seydou", label: "Construire et nettoyer le fichier de prospects", fait: "Seydou complète le fichier : bons contacts, bons numéros, doublons retirés." },
+      { id: "c13", par: "seydou", label: "Suivre les prix et les offres des concurrents", fait: "Seydou relève les prix et les offres de vos concurrents et vous signale ce qui bouge." },
+      { id: "c14", par: "seydou", label: "Préparer une fiche sur le client avant chaque rendez-vous", fait: "Seydou résume le prospect sur une page : activité, chiffres, actualité et interlocuteurs." },
+      { id: "c15", par: "kouassi", label: "Écrire aux contacts rencontrés en salon ou en événement", fait: "Kouassi écrit à chaque contact dans les 48 heures, avec un message personnalisé." },
+      { id: "c16", par: "kouassi", label: "Programmer les rendez-vous commerciaux", fait: "Kouassi propose les créneaux, confirme le rendez-vous et envoie le rappel la veille." },
+      { id: "c17", par: "sena", label: "Adapter la présentation commerciale à chaque client", fait: "Sèna adapte votre présentation au secteur du client, à ses enjeux et à vos références proches." },
+      { id: "c18", par: "sena", label: "Rédiger les bons de commande et les contrats", fait: "Sèna prépare le bon de commande ou le contrat depuis vos modèles, prêt à signer après votre relecture." },
+      { id: "c19", par: "aminata", label: "Préparer les prévisions de ventes du mois", fait: "Aminata calcule les ventes probables du mois à partir du pipeline et vous signale l'écart avec l'objectif." },
+      { id: "c20", par: "aminata", label: "Suivre les objectifs et les commissions des commerciaux", fait: "Aminata suit chaque commercial face à son objectif et prépare le calcul des commissions." }
     ]
   },
   {
     id: "marketing", icone: "megaphone", nom: "Marketing et communication", titre: "De la stratégie à la campagne mesurée",
     outils: ["Facebook", "Instagram", "LinkedIn", "TikTok", "Canva", "WhatsApp", "Google Drive", "YouTube", "Mailchimp", "Meta Business"],
-    volume: { question: "Combien de publications par semaine ?", options: ["0 à 2", "3 à 7", "8 à 20", "Plus de 20"] },
+    metier: [
+      { id: "q1", icone: "megaphone", question: "Combien de publications par semaine ?", options: ["0 à 2", "3 à 7", "8 à 20", "Plus de 20"] },
+      { id: "q2", icone: "target", question: "Combien de campagnes sponsorisées par mois ?", options: ["Aucune", "1 ou 2", "3 à 5", "Plus de 5"] },
+      { id: "q3", icone: "globe", question: "Sur combien de réseaux êtes-vous actifs ?", options: ["Un seul", "2 ou 3", "4 ou 5", "Plus de 5"] }
+    ],
     equipe: [
-      { id: "aya", prenom: "Aya", role: "Stratégie de contenu", photo: "av-aya-sq.jpg" },
-      { id: "fatima", prenom: "Fatima", role: "Contenus et réseaux", photo: "av-fatima-sq.jpg" },
-      { id: "koffi", prenom: "Koffi", role: "Design", photo: "av-koffi-sq.jpg" },
-      { id: "yao", prenom: "Yao", role: "Campagnes et résultats", photo: "av-yao-sq.jpg" }
+      { id: "aya", icone: "lightbulb", prenom: "Aya", role: "Stratégie de contenu", photo: "av-aya-sq.jpg" },
+      { id: "fatima", icone: "pen-tool", prenom: "Fatima", role: "Contenus et réseaux", photo: "av-fatima-sq.jpg" },
+      { id: "koffi", icone: "palette", prenom: "Koffi", role: "Design", photo: "av-koffi-sq.jpg" },
+      { id: "yao", icone: "chart-column", prenom: "Yao", role: "Campagnes et résultats", photo: "av-yao-sq.jpg" }
     ],
     taches: [
       { id: "m1", par: "fatima", label: "Écrire les posts et les newsletters", fait: "Fatima rédige posts et newsletters dans le ton de votre marque, prêts à valider." },
@@ -54,18 +71,31 @@ D.fonctions = [
       { id: "m8", par: "koffi", label: "Créer plaquettes, présentations et supports", fait: "Koffi met en forme plaquettes, catalogues et présentations aux couleurs de la maison." },
       { id: "m9", par: "fatima", label: "Rédiger les fiches produits et les pages du site", fait: "Fatima rédige fiches et pages, optimisées pour Google, dans votre ton." },
       { id: "m10", par: "yao", label: "Préparer les campagnes sponsorisées", fait: "Yao propose cibles, budget et annonces, puis suit le coût de chaque contact." },
-      { id: "m11", par: "yao", label: "Suivre les influenceurs et partenaires", fait: "Yao prépare les briefs, suit les publications et mesure les retombées." }
+      { id: "m11", par: "yao", label: "Suivre les influenceurs et partenaires", fait: "Yao prépare les briefs, suit les publications et mesure les retombées." },
+      { id: "m12", par: "aya", label: "Définir les messages et les cibles", fait: "Aya formule vos messages cible par cible et vous propose les angles qui parlent à chacune." },
+      { id: "m13", par: "aya", label: "Rédiger les briefs pour l'agence et les prestataires", fait: "Aya rédige le brief complet : objectif, cible, message, livrables et délais." },
+      { id: "m14", par: "fatima", label: "Écrire les scripts des vidéos courtes", fait: "Fatima écrit les scripts de vos vidéos TikTok et Reels, avec une accroche dans les trois premières secondes." },
+      { id: "m15", par: "fatima", label: "Rédiger les communiqués et les articles", fait: "Fatima rédige communiqués et articles de blog, prêts à relire." },
+      { id: "m16", par: "koffi", label: "Décliner les visuels dans tous les formats", fait: "Koffi adapte chaque visuel au format de chaque réseau, de la story à la bannière." },
+      { id: "m17", par: "koffi", label: "Préparer affiches, flyers et kakémonos", fait: "Koffi prépare les fichiers d'impression aux bonnes dimensions, prêts pour l'imprimeur." },
+      { id: "m18", par: "koffi", label: "Tenir la charte graphique et la banque d'images", fait: "Koffi range logos, photos et modèles, et vérifie que tout respecte votre charte." },
+      { id: "m19", par: "yao", label: "Faire le bilan mensuel du marketing", fait: "Yao prépare le bilan du mois : portée, contacts, coûts, et ce qui a rapporté." },
+      { id: "m20", par: "yao", label: "Relier les contacts générés aux ventes", fait: "Yao relie chaque contact à sa campagne et vous dit lesquelles amènent des clients." }
     ]
   },
   {
     id: "rh", icone: "users", nom: "RH et talents", titre: "Du recrutement à l'équipe qui reste",
     outils: ["Excel", "Google Sheets", "Gmail", "Outlook", "WhatsApp", "LinkedIn", "Sage", "Sage Paie", "Teams", "SAP"],
-    volume: { question: "Combien de salariés gérez-vous ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] },
+    metier: [
+      { id: "q1", icone: "users", question: "Combien de salariés gérez-vous ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] },
+      { id: "q2", icone: "user-search", question: "Combien de recrutements par an ?", options: ["Moins de 5", "5 à 20", "20 à 100", "Plus de 100"] },
+      { id: "q3", icone: "files", question: "Combien de CV reçus par offre ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] }
+    ],
     equipe: [
-      { id: "adjoua", prenom: "Adjoua", role: "Recrutement", photo: "av-adjoua-sq.jpg" },
-      { id: "fatou", prenom: "Fatou", role: "RH et paie", photo: "av-fatou-sq.jpg" },
-      { id: "lamine", prenom: "Lamine", role: "Onboarding et formation", photo: "av-lamine-sq.jpg" },
-      { id: "cheikh", prenom: "Cheikh", role: "Climat social", photo: "av-cheikh-sq.jpg" }
+      { id: "adjoua", icone: "user-search", prenom: "Adjoua", role: "Recrutement", photo: "av-adjoua-sq.jpg" },
+      { id: "fatou", icone: "receipt", prenom: "Fatou", role: "RH et paie", photo: "av-fatou-sq.jpg" },
+      { id: "lamine", icone: "graduation-cap", prenom: "Lamine", role: "Onboarding et formation", photo: "av-lamine-sq.jpg" },
+      { id: "cheikh", icone: "heart-handshake", prenom: "Cheikh", role: "Climat social", photo: "av-cheikh-sq.jpg" }
     ],
     taches: [
       { id: "r1", par: "adjoua", label: "Rédiger et diffuser les offres d'emploi", fait: "Adjoua rédige la fiche de poste et diffuse l'offre sur vos canaux." },
@@ -78,18 +108,31 @@ D.fonctions = [
       { id: "r8", par: "lamine", label: "Accueillir les nouveaux arrivants", fait: "Lamine prépare l'arrivée, les documents et le parcours des premières semaines." },
       { id: "r9", par: "lamine", label: "Organiser les formations", fait: "Lamine recense les besoins, planifie les sessions et suit les présences." },
       { id: "r10", par: "cheikh", label: "Préparer les entretiens annuels", fait: "Cheikh prépare les supports et relance managers et salariés." },
-      { id: "r11", par: "cheikh", label: "Repérer les tensions et les départs qui se préparent", fait: "Cheikh écoute les équipes et vous signale ce qui fait partir les gens, avant qu'ils partent." }
+      { id: "r11", par: "cheikh", label: "Repérer les tensions et les départs qui se préparent", fait: "Cheikh écoute les équipes et vous signale ce qui fait partir les gens, avant qu'ils partent." },
+      { id: "r12", par: "adjoua", label: "Préparer les tests et les grilles d'entretien", fait: "Adjoua prépare les questions et la grille de notation de chaque poste." },
+      { id: "r13", par: "adjoua", label: "Répondre aux candidats non retenus", fait: "Adjoua répond à chaque candidat avec courtoisie, pour garder une bonne image employeur." },
+      { id: "r14", par: "fatou", label: "Suivre les congés et les absences", fait: "Fatou tient les soldes de congés, enregistre les absences et prévient quand un planning coince." },
+      { id: "r15", par: "lamine", label: "Tenir le livret d'accueil et les procédures", fait: "Lamine tient à jour le livret d'accueil et les procédures de chaque poste." },
+      { id: "r16", par: "lamine", label: "Suivre les périodes d'essai", fait: "Lamine programme les points d'étape et vous rappelle chaque fin d'essai à temps." },
+      { id: "r17", par: "lamine", label: "Évaluer les formations suivies", fait: "Lamine recueille l'avis des participants et mesure ce qui a changé après la formation." },
+      { id: "r18", par: "cheikh", label: "Mener les enquêtes auprès des salariés", fait: "Cheikh prépare l'enquête, recueille les réponses anonymes et vous résume ce qui ressort." },
+      { id: "r19", par: "cheikh", label: "Préparer les réunions avec les délégués du personnel", fait: "Cheikh prépare l'ordre du jour, les réponses aux questions et le compte rendu." },
+      { id: "r20", par: "cheikh", label: "Préparer les courriers RH sensibles", fait: "Cheikh prépare avertissements et courriers de rupture selon le Code du travail, et vous relisez avant tout envoi." }
     ]
   },
   {
     id: "finance", icone: "wallet", nom: "Finance et comptabilité", titre: "De la facture au chiffre fiable",
     outils: ["Sage", "Excel", "Perfecto", "Odoo", "SAP", "QuickBooks", "Google Sheets", "Power BI", "Gmail", "Wave", "Orange Money", "MTN MoMo"],
-    volume: { question: "Combien de factures traitez-vous par mois ?", options: ["Moins de 50", "50 à 200", "200 à 1 000", "Plus de 1 000"] },
+    metier: [
+      { id: "q1", icone: "receipt-text", question: "Combien de factures traitez-vous par mois ?", options: ["Moins de 50", "50 à 200", "200 à 1 000", "Plus de 1 000"] },
+      { id: "q2", icone: "banknote", question: "Combien de comptes bancaires et mobile money ?", options: ["1 ou 2", "3 à 5", "6 à 10", "Plus de 10"] },
+      { id: "q3", icone: "shopping-cart", question: "Combien de fournisseurs actifs ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] }
+    ],
     equipe: [
-      { id: "kadiatou", prenom: "Kadiatou", role: "Factures", photo: "av-kadiatou-sq.jpg" },
-      { id: "daouda", prenom: "Daouda", role: "Trésorerie et recouvrement", photo: "av-daouda-sq.jpg" },
-      { id: "rokia", prenom: "Rokia", role: "Dépenses", photo: "av-rokia-sq.jpg" },
-      { id: "mamadou", prenom: "Mamadou", role: "Comptabilité et contrôle de gestion", photo: "av-mamadou-sq.jpg" }
+      { id: "kadiatou", icone: "receipt-text", prenom: "Kadiatou", role: "Factures", photo: "av-kadiatou-sq.jpg" },
+      { id: "daouda", icone: "banknote", prenom: "Daouda", role: "Trésorerie et recouvrement", photo: "av-daouda-sq.jpg" },
+      { id: "rokia", icone: "shopping-cart", prenom: "Rokia", role: "Dépenses", photo: "av-rokia-sq.jpg" },
+      { id: "mamadou", icone: "calculator", prenom: "Mamadou", role: "Comptabilité et contrôle de gestion", photo: "av-mamadou-sq.jpg" }
     ],
     taches: [
       { id: "f1", par: "daouda", label: "Relancer les factures impayées", fait: "Daouda relance les impayés par email et WhatsApp, au bon ton, et vous montre l'état des créances." },
@@ -102,18 +145,31 @@ D.fonctions = [
       { id: "f8", par: "daouda", label: "Suivre les échéances fournisseurs", fait: "Daouda tient l'échéancier et vous propose le plan de paiement de la semaine." },
       { id: "f9", par: "mamadou", label: "Préparer la clôture du mois", fait: "Mamadou prépare la clôture : écritures manquantes, rapprochements et commentaires." },
       { id: "f10", par: "mamadou", label: "Préparer les états pour la banque ou les actionnaires", fait: "Mamadou prépare les états et leurs commentaires, prêts à partir après votre accord." },
-      { id: "f11", par: "mamadou", label: "Préparer les déclarations fiscales", fait: "Mamadou prépare les éléments des déclarations et vérifie les montants." }
+      { id: "f11", par: "mamadou", label: "Préparer les déclarations fiscales", fait: "Mamadou prépare les éléments des déclarations et vérifie les montants." },
+      { id: "f12", par: "kadiatou", label: "Émettre les factures clients", fait: "Kadiatou prépare les factures depuis les bons de livraison et les envoie après votre accord." },
+      { id: "f13", par: "kadiatou", label: "Classer et archiver les pièces", fait: "Kadiatou range chaque pièce au bon endroit et la retrouve en quelques secondes." },
+      { id: "f14", par: "kadiatou", label: "Réclamer les factures fournisseurs manquantes", fait: "Kadiatou réclame les factures et les pièces manquantes avant la clôture." },
+      { id: "f15", par: "daouda", label: "Pointer les encaissements banque et mobile money", fait: "Daouda pointe chaque encaissement et l'associe à la bonne facture." },
+      { id: "f16", par: "daouda", label: "Préparer les dossiers de crédit et de découvert", fait: "Daouda prépare les tableaux et les pièces que demande votre banque." },
+      { id: "f17", par: "rokia", label: "Comparer les devis fournisseurs", fait: "Rokia compare les devis à qualité égale et vous propose le meilleur choix." },
+      { id: "f18", par: "rokia", label: "Suivre les budgets par service", fait: "Rokia compare chaque mois les dépenses au budget et vous signale les dépassements." },
+      { id: "f19", par: "rokia", label: "Tenir la caisse et les petites dépenses", fait: "Rokia tient le brouillard de caisse et vérifie chaque justificatif." },
+      { id: "f20", par: "mamadou", label: "Préparer le tableau de bord de la direction", fait: "Mamadou prépare chaque mois vos indicateurs clés et explique ce qui a bougé." }
     ]
   },
   {
     id: "support", icone: "headset", nom: "Service client et fidélisation", titre: "De la demande au client satisfait",
     outils: ["WhatsApp", "Telegram", "Gmail", "Outlook", "Facebook", "Instagram", "Excel", "HubSpot", "Zendesk", "Freshdesk", "Shopify"],
-    volume: { question: "Combien de demandes clients recevez-vous par jour ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] },
+    metier: [
+      { id: "q1", icone: "message-circle", question: "Combien de demandes clients par jour ?", options: ["Moins de 20", "20 à 100", "100 à 500", "Plus de 500"] },
+      { id: "q2", icone: "headset", question: "Combien de personnes répondent aux clients ?", options: ["Aucune dédiée", "1 à 3", "4 à 10", "Plus de 10"] },
+      { id: "q3", icone: "layers", question: "Sur combien de canaux vos clients écrivent-ils ?", options: ["Un seul", "2 ou 3", "4 ou 5", "Plus de 5"] }
+    ],
     equipe: [
-      { id: "awa", prenom: "Awa", role: "Réponse aux clients", photo: "av-awa-sq.jpg" },
-      { id: "salif", prenom: "Salif", role: "Réclamations et livraisons", photo: "av-salif-sq.jpg" },
-      { id: "akissi", prenom: "Akissi", role: "Satisfaction et fidélisation", photo: "av-akissi-sq.jpg" },
-      { id: "ousmane", prenom: "Ousmane", role: "Qualité et base de réponses", photo: "av-ousmane-sq.jpg" }
+      { id: "awa", icone: "message-circle", prenom: "Awa", role: "Réponse aux clients", photo: "av-awa-sq.jpg" },
+      { id: "salif", icone: "truck", prenom: "Salif", role: "Réclamations et livraisons", photo: "av-salif-sq.jpg" },
+      { id: "akissi", icone: "smile", prenom: "Akissi", role: "Satisfaction et fidélisation", photo: "av-akissi-sq.jpg" },
+      { id: "ousmane", icone: "book-open", prenom: "Ousmane", role: "Qualité et base de réponses", photo: "av-ousmane-sq.jpg" }
     ],
     taches: [
       { id: "s1", par: "awa", label: "Répondre aux mêmes questions tous les jours", fait: "Awa répond en quelques secondes, jour et nuit, aux questions récurrentes de vos clients." },
@@ -125,18 +181,32 @@ D.fonctions = [
       { id: "s7", par: "akissi", label: "Recueillir les avis et la satisfaction", fait: "Akissi sollicite les avis après l'achat et vous résume ce qui revient." },
       { id: "s8", par: "ousmane", label: "Mettre à jour la FAQ et les réponses types", fait: "Ousmane repère les nouvelles questions et propose les réponses à ajouter." },
       { id: "s9", par: "awa", label: "Prendre les commandes par message", fait: "Awa prend la commande, vérifie le stock et l'adresse, puis la transmet à l'équipe." },
-      { id: "s10", par: "ousmane", label: "Faire le point des demandes non résolues", fait: "Chaque soir, Ousmane liste les demandes en attente et qui doit répondre." }
+      { id: "s10", par: "ousmane", label: "Faire le point des demandes non résolues", fait: "Chaque soir, Ousmane liste les demandes en attente et qui doit répondre." },
+      { id: "s11", par: "awa", label: "Orienter les demandes vers le bon service", fait: "Awa comprend la demande et la transmet à la bonne personne, avec tout le contexte." },
+      { id: "s12", par: "awa", label: "Répondre sur tous les canaux à la fois", fait: "Awa répond là où le client écrit, WhatsApp, Facebook ou email, avec la même qualité partout." },
+      { id: "s13", par: "salif", label: "Organiser les retours et les échanges", fait: "Salif vérifie la demande selon vos règles, organise le retour et informe le client." },
+      { id: "s14", par: "salif", label: "Suivre les livreurs et les retards", fait: "Salif suit les livraisons en cours et prévient le client avant qu'il s'inquiète." },
+      { id: "s15", par: "akissi", label: "Relancer les commandes abandonnées", fait: "Akissi relance les clients qui n'ont pas finalisé, avec un message simple." },
+      { id: "s16", par: "akissi", label: "Animer le programme de fidélité", fait: "Akissi suit les points, rappelle aux clients leurs avantages et propose les offres." },
+      { id: "s17", par: "akissi", label: "Souhaiter anniversaires et fêtes aux clients", fait: "Akissi envoie le bon message au bon moment : anniversaire, Tabaski, Noël, fin d'année." },
+      { id: "s18", par: "ousmane", label: "Contrôler la qualité des réponses de l'équipe", fait: "Ousmane relit un échantillon de réponses et signale ce qui doit être corrigé." },
+      { id: "s19", par: "ousmane", label: "Analyser les motifs de plainte", fait: "Ousmane classe les plaintes par motif et vous montre ce qui revient le plus." },
+      { id: "s20", par: "ousmane", label: "Former les nouveaux conseillers aux réponses types", fait: "Ousmane prépare les fiches de réponse et les cas pratiques des nouveaux conseillers." }
     ]
   },
   {
     id: "investissement", icone: "hand-coins", nom: "Investissement et portefeuille", titre: "Du dossier reçu au portefeuille suivi",
     outils: ["Excel", "Gmail", "Outlook", "Notion", "Google Drive", "DocuSign", "LinkedIn", "Power BI"],
-    volume: { question: "Combien de dossiers recevez-vous par mois ?", options: ["Moins de 10", "10 à 50", "50 à 200", "Plus de 200"] },
+    metier: [
+      { id: "q1", icone: "files", question: "Combien de dossiers recevez-vous par mois ?", options: ["Moins de 10", "10 à 50", "50 à 200", "Plus de 200"] },
+      { id: "q2", icone: "chart-pie", question: "Combien de participations suivez-vous ?", options: ["Moins de 5", "5 à 15", "15 à 40", "Plus de 40"] },
+      { id: "q3", icone: "calendar-check", question: "Combien de comités d'investissement par an ?", options: ["Moins de 4", "4 à 12", "12 à 24", "Plus de 24"] }
+    ],
     equipe: [
-      { id: "fifame", prenom: "Fifamè", role: "Sourcing des dossiers", photo: "av-fifame-sq.jpg" },
-      { id: "alioune", prenom: "Alioune", role: "Analyse et due diligence", photo: "av-alioune-sq.jpg" },
-      { id: "ibrahim", prenom: "Ibrahim", role: "Pactes et juridique", photo: "av-ibrahim-sq.jpg" },
-      { id: "nadia", prenom: "Nadia", role: "Suivi du portefeuille", photo: "av-nadia-sq.jpg" }
+      { id: "fifame", icone: "search", prenom: "Fifamè", role: "Sourcing des dossiers", photo: "av-fifame-sq.jpg" },
+      { id: "alioune", icone: "microscope", prenom: "Alioune", role: "Analyse et due diligence", photo: "av-alioune-sq.jpg" },
+      { id: "ibrahim", icone: "scale", prenom: "Ibrahim", role: "Pactes et juridique", photo: "av-ibrahim-sq.jpg" },
+      { id: "nadia", icone: "chart-pie", prenom: "Nadia", role: "Suivi du portefeuille", photo: "av-nadia-sq.jpg" }
     ],
     taches: [
       { id: "i1", par: "fifame", label: "Trier les dossiers entrants", fait: "Fifamè note chaque dossier contre votre thèse d'investissement." },
@@ -148,7 +218,17 @@ D.fonctions = [
       { id: "i7", par: "ibrahim", label: "Relire les statuts et le pacte", fait: "Ibrahim relit statuts et pacte, et signale les clauses à négocier." },
       { id: "i8", par: "ibrahim", label: "Préparer term sheets et documentation", fait: "Ibrahim prépare la term sheet et la liste des pièces à partir de vos modèles." },
       { id: "i9", par: "nadia", label: "Suivre les participations", fait: "Nadia suit les participations, la trésorerie et les alertes convenues." },
-      { id: "i10", par: "nadia", label: "Préparer les rapports aux investisseurs", fait: "Nadia prépare le rapport trimestriel à vos investisseurs." }
+      { id: "i10", par: "nadia", label: "Préparer les rapports aux investisseurs", fait: "Nadia prépare le rapport trimestriel à vos investisseurs." },
+      { id: "i11", par: "fifame", label: "Préparer le premier appel avec les fondateurs", fait: "Fifamè prépare la fiche du dossier et les questions du premier appel." },
+      { id: "i12", par: "fifame", label: "Tenir la base des dossiers et des contacts", fait: "Fifamè tient la base à jour : statut, prochaine étape, dernier échange." },
+      { id: "i13", par: "alioune", label: "Faire les études de marché et de concurrence", fait: "Alioune dimensionne le marché et compare l'entreprise à ses concurrents de la zone." },
+      { id: "i14", par: "alioune", label: "Comparer les valorisations aux opérations récentes", fait: "Alioune rassemble les opérations comparables et en tire une fourchette de valorisation." },
+      { id: "i15", par: "ibrahim", label: "Suivre les conditions avant décaissement", fait: "Ibrahim tient la liste des conditions et vous dit ce qui manque avant de décaisser." },
+      { id: "i16", par: "ibrahim", label: "Vérifier la conformité KYC et anti-blanchiment", fait: "Ibrahim vérifie les pièces, les bénéficiaires effectifs et les listes de sanctions." },
+      { id: "i17", par: "ibrahim", label: "Tenir le registre des documents juridiques", fait: "Ibrahim range statuts, pactes et procès-verbaux, et suit leurs échéances." },
+      { id: "i18", par: "nadia", label: "Collecter les reportings des participations", fait: "Nadia réclame les chiffres chaque mois, les vérifie et relance les retardataires." },
+      { id: "i19", par: "nadia", label: "Préparer les conseils d'administration", fait: "Nadia prépare le dossier du conseil : chiffres, points d'alerte, questions à poser." },
+      { id: "i20", par: "nadia", label: "Calculer la performance du portefeuille", fait: "Nadia calcule la performance de chaque participation et du fonds, prête pour vos rapports." }
     ]
   }
 ];

@@ -47,7 +47,8 @@ window.DECLIC = {
   objectifs: [
     { id: "temps", label: "Gagner du temps", icone: "timer" }, { id: "ventes", label: "Vendre plus", icone: "trending-up" },
     { id: "pilotage", label: "Mieux piloter", icone: "gauge" }, { id: "erreurs", label: "Faire moins d'erreurs", icone: "shield-check" },
-    { id: "economies", label: "Faire des économies", icone: "piggy-bank" }
+    { id: "economies", label: "Faire des économies", icone: "piggy-bank" },
+    { id: "clients", label: "Mieux servir vos clients", icone: "smile" }
   ],
 
   // Qui travaille, et où vivent les informations : sert au résultat et à préparer la démo.
@@ -62,11 +63,7 @@ window.DECLIC = {
       { id: "man", label: "Managers et cadres", icone: "briefcase" },
       { id: "emp", label: "Employés et agents", icone: "users" }
     ],
-    cotes: [
-      { id: "bureau", label: "Au bureau", icone: "building-2" },
-      { id: "terrain", label: "Sur le terrain", icone: "map-pin" }
-    ],
-    tranches: ["0", "1 à 5", "6 à 20", "21 à 100", "100 +"]
+    tranches: ["1 à 5", "6 à 20", "21 à 100", "Plus de 100"]
   },
   infos: {
     lieux: [
