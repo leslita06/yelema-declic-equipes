@@ -396,7 +396,7 @@ footer{padding:22px 0 30px;color:var(--grey2);font-size:12px;text-transform:uppe
   .pdf-f .btn{flex:1 1 100%;justify-content:center}.pdf-f .em{flex:1 1 100%;justify-content:center}
   .offer{padding:22px;border-radius:24px}.offer h3{font-size:24px}
   .sec-t{font-size:21px;margin-top:30px}
-  .kpis{grid-template-columns:repeat(3,1fr)!important;gap:8px}.kpi{flex-direction:column;align-items:flex-start;padding:12px;gap:4px}.kpi .chip{display:none}.kpi b{font-size:26px}.kpi div > span{font-size:12.5px;line-height:1.3;display:block}
+  .kpis{grid-template-columns:repeat(2,1fr)!important;gap:8px}.kpi{flex-direction:column;align-items:flex-start;padding:12px;gap:4px}.kpi .chip{display:none}.kpi b{font-size:26px}.kpi div > span{font-size:12.5px;line-height:1.3;display:block}
   .ring{width:150px!important;height:150px!important}.r-hero h2{font-size:24px}
 }
 
@@ -491,6 +491,28 @@ body{background:#F8F7FC}
 .pdf-mode .r-hero::after{display:none}
 .tm .m{align-items:flex-start}.tm .m .ic{margin-top:2px}
 .pdf-err{display:block;margin-top:8px;font-size:13px;color:var(--corail)}
+
+/* Retours Kirane 26/10 : mesure de chaque tâche en trois menus, total en direct, quatre chiffres au rapport. */
+.mes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 18px;max-height:0;opacity:0;overflow:hidden;transition:all .3s}
+.task.sel .mes{max-height:320px;opacity:1;padding:0 18px 16px}
+.mes label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.mes select{appearance:none;-webkit-appearance:none;font:inherit;font-size:15px;font-weight:500;color:var(--indigo);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238D68FA' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;border:1.5px solid var(--line);border-radius:12px;padding:11px 34px 11px 12px;width:100%}
+.mes select:focus{outline:0;border-color:var(--violet)}
+.mes select.ok{border-color:var(--violet);background-color:var(--lilac)}
+.mes .calc{grid-column:1/-1;font-size:13.5px;color:var(--violet);font-weight:600;display:flex;gap:6px;align-items:center;min-height:18px}
+.mes .calc .ic{width:15px;height:15px}
+.tot{position:sticky;bottom:84px;z-index:3;display:flex;align-items:center;gap:12px;margin:16px 0 0;background:var(--indigo);color:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 14px 30px rgba(48,22,103,.25)}
+.tot .ic{color:#F0A08A}.tot b{font-family:'Space Grotesk';font-size:22px}.tot span{font-size:14px;opacity:.85}
+.kpis.k4{grid-template-columns:repeat(4,1fr)}
+.kpis.k4 .kpi b{font-size:30px;white-space:nowrap}
+.secs.un{grid-template-columns:1fr}
+.kpi.k4m .chip{background:linear-gradient(135deg,#2E4EC4,#8D68FA)}
+.pain .det{font-size:13px;color:var(--muted)}
+.ia-l{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ia-l span{display:inline-flex;align-items:center;gap:6px;background:var(--lilac);border-radius:999px;padding:5px 12px 5px 6px;font-size:13.5px;color:var(--indigo)}
+.ia-l img{width:20px;height:20px;border-radius:5px}
+@media (max-width:860px){.kpis.k4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.mes{grid-template-columns:1fr;gap:8px}.tot{bottom:76px;padding:12px 14px}.tot b{font-size:19px}.kpis.k4 .kpi b{font-size:24px}}
 </style>
 </head>
 <body>
@@ -535,7 +557,13 @@ const ph = f => 'assets/experts/' + f;
 const logo = o => D.logos[o] ? `<img src="assets/logos/${D.logos[o]}" alt="">` : `<span class="gen">${ic('wrench')}</span>`;
 const nb = x => (Math.round(x * 10) / 10).toString().replace('.', ',');
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const st = { profil: {}, taille: null, lieu: null, effectifs: {}, secteur: null, secteurAutre: '', fonction: null, fonction2: null, metier: {}, taches: {}, ordre: [], autre: '', outils: [], lieux: [], mat: {}, objectif: null, libre: {}, pdf: false };
+const st = { profil: {}, taille: null, lieu: null, effectifs: {}, secteur: null, secteurAutre: '', fonction: null, fonction2: null, taches: {}, autre: '', outils: [], salaire: null, ias: [], mat: {}, objectif: null, libre: {}, pdf: false };
+// Une tâche cochée porte trois réponses : fréquence (f), durée à chaque fois (d), personnes (p).
+const FQ = id => D.frequences.find(x => x.id === id), DU = id => D.durees.find(x => x.id === id), PE = id => D.personnes.find(x => x.id === id);
+const heuresT = tid => { const m = st.taches[tid]; return m && FQ(m.f) && DU(m.d) && PE(m.p) ? FQ(m.f).parSemaine * DU(m.d).heures * PE(m.p).n : 0; };
+const detailT = tid => { const m = st.taches[tid]; return [FQ(m.f), DU(m.d), PE(m.p)].map(x => x && x.label.toLowerCase()).filter(Boolean).join(', '); };
+const fcfa = x => (Math.round(x / 1000) * 1000).toLocaleString('fr-FR').replace(/\u202f|\u00a0/g, ' ');
+const salaire = () => { const x = D.salaires.find(y => y.id === st.salaire); return x && x.v ? x.v : D.salaireDefaut; };
 const parId = {}; D.fonctions.forEach(f => f.taches.forEach(t => parId[t.id] = { t, f, x: f.equipe.find(e => e.id === t.par) }));
 const fct = () => D.fonctions.find(f => f.id === st.fonction);
 const AUTRE = 'x-autre';
@@ -545,9 +573,9 @@ function tache(id){
   return { f, x: null, t: { id, label: st.autre || 'Autre tâche', fait: `Votre équipe regarde cette tâche avec vous pendant la démonstration.` } };
 }
 
-// Les sept sections du Déclic (liste validée le 25/10/26, msg 59641).
-const SECTIONS = ['Vous et votre entreprise', 'Votre fonction et son équipe', 'Vision et priorités', 'Vos équipes et l\'IA', 'Vos données et vos accès', 'Organisation et confiance', 'Avec vos mots'];
-const SEC_DE = { profil: 1, taille: 1, secteur: 1, equipes: 1, fonction: 2, taches: 2, metier: 2, vision: 3, 'sec:equipes': 4, 'sec:donnees': 5, 'sec:organisation': 6, libre: 7 };
+// Quatre sections depuis les retours de Kirane (26/10/26) : données, accès, organisation et confiance retirées.
+const SECTIONS = ['Vous et votre entreprise', 'Votre fonction et son équipe', 'L\'IA chez vous', 'Avec vos mots'];
+const SEC_DE = { profil: 1, taille: 1, secteur: 1, equipes: 1, fonction: 2, taches: 2, metier: 2, ia: 3, libre: 4 };
 const NIV_SEC = ['À lancer', 'En éveil', 'En route', 'Solide'];
 
 // La fleur Yelema : six pétales arrondis autour d'un cœur corail.
@@ -557,17 +585,17 @@ function fleur(cls, rayon){
 }
 function majMini(f){ document.getElementById('mini').innerHTML = [0,1,2,3,4,5].map(k => `<g transform="rotate(${30+k*60} 240 240)"><rect x="196" y="16" width="88" height="224" rx="44" fill="${k < Math.round(f*6) ? PET[k] : '#DCD5F7'}"/></g>`).join('') + `<circle cx="240" cy="240" r="40" fill="${f >= 1 ? '#E4765A' : '#C9BEF5'}"/>`; }
 
-const ECRANS = ['accueil', 'profil', 'taille', 'secteur', 'equipes', 'fonction', 'taches', 'metier', 'vision', 'sec:equipes', 'sec:donnees', 'sec:organisation', 'libre', 'analyse', 'resultat'];
+const ECRANS = ['accueil', 'profil', 'taille', 'secteur', 'equipes', 'fonction', 'taches', 'metier', 'ia', 'libre', 'analyse', 'resultat'];
 let pos = 0;
 function aller(n){
   pos = Math.max(0, Math.min(n, ECRANS.length - 1));
   const [nom, arg] = ECRANS[pos].split(':');
   app.innerHTML = `<section class="screen on">${VUES[nom](arg)}</section>`;
-  const s = SEC_DE[ECRANS[pos]], f = nom === 'accueil' ? 0 : s ? (s - 1) / 7 : 1;
+  const s = SEC_DE[ECRANS[pos]], f = nom === 'accueil' ? 0 : s ? (s - 1) / SECTIONS.length : 1;
   document.getElementById('prog').style.width = (f * 100) + '%'; majMini(f);
   // Déclic fini : seule la fleur qui tourne reste, pas la petite fleur de l'en-tête (msg 59778-59779).
   document.getElementById('mini').style.display = nom === 'analyse' || nom === 'resultat' ? 'none' : '';
-  document.getElementById('stepn').textContent = nom === 'accueil' ? 'Cinq minutes' : s ? `Section ${s} sur 7` : 'Votre Déclic';
+  document.getElementById('stepn').textContent = nom === 'accueil' ? 'Cinq minutes' : s ? `Section ${s} sur ${SECTIONS.length}` : 'Votre Déclic';
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (APRES[nom]) APRES[nom](arg);
 }
@@ -600,7 +628,7 @@ const VUES = {
         <div class="floaty" style="right:-6px;bottom:2%;animation-delay:3.6s"><img src="${ph('av-aminata-sq.jpg')}" alt="">4. Aminata suit vos ventes</div>
       </div></div></div>
     <div class="wrap etapes">${[['list-checks', 'Vos tâches', 'Choisissez vos fonctions et les tâches qui vous prennent le plus de temps.'],
-      ['clock', 'Votre temps perdu', 'Le Déclic chiffre les heures perdues chaque mois et donne votre note de maturité IA.'],
+      ['clock', 'Votre temps perdu', 'Le Déclic chiffre les heures perdues et ce qu\'elles vous coûtent chaque mois.'],
       ['users', 'Votre équipe d\'Experts', 'Vous découvrez les Experts qui reprennent ces tâches, et recevez votre plan en PDF.']]
       .map(([i, t, d], k) => `<div class="etape"><span class="n">${k + 1}</span><span class="chip">${ic(i)}</span><b>${t}</b><p>${d}</p></div>`).join('')}</div>`,
 
@@ -633,31 +661,31 @@ const VUES = {
       <span class="fct-eq">${f.equipe.map(e => `<span class="m"><img src="${ph(e.photo)}" alt=""><b>${e.prenom}</b><small>${ic(e.icone)}${e.role}</small></span>`).join('')}</span>${r ? `<span class="fct-r">${r === 1 ? 'Fonction détaillée' : 'Deuxième fonction'}</span>` : ''}</button>`; }).join('')}</div>` + nav() + '</div>',
 
   taches: () => { const f = fct();
-    const heures = tid => `<div class="hours"><span class="lab">${ic('clock')} Temps perdu chaque semaine, pour toute l'équipe</span>${D.temps.map(x => `<button class="hb ${st.taches[tid] === x.heures ? 'on' : ''}" data-h="${x.heures}" data-tt="${tid}"><span class="lg">${x.label}</span><span class="sm">${x.court}</span></button>`).join('')}</div>`;
+    const menu = (tid, k, opts, lab) => { const v = (st.taches[tid] || {})[k]; return `<label>${lab}<select data-m="${k}" data-tt="${tid}" class="${v ? 'ok' : ''}"><option value="">Choisir</option>${opts.map(o => `<option value="${o.id}" ${v === o.id ? 'selected' : ''}>${o.label}</option>`).join('')}</select></label>`; };
+    const mesure = tid => `<div class="mes">${menu(tid, 'f', D.frequences, 'À quelle fréquence ?')}${menu(tid, 'd', D.durees, 'Combien de temps à chaque fois ?')}${menu(tid, 'p', D.personnes, 'Combien de personnes ?')}<span class="calc" data-calc="${tid}"></span></div>`;
     const ligne = t => `<div class="task ${t.id in st.taches ? 'sel' : ''}" data-t="${t.id}">
-        <button class="task-row" data-tache="${t.id}"><span class="box">${ic('check')}</span><span class="l">${t.label}</span></button>${heures(t.id)}</div>`;
-    return tete(f.icone, 'Qu\'est-ce qui vous fait perdre du temps ?', 'Cochez les tâches qui vous pèsent, dites combien d\'heures elles coûtent chaque semaine, puis classez-les de la plus pénible à la moins pénible.') +
+        <button class="task-row" data-tache="${t.id}"><span class="box">${ic('check')}</span><span class="l">${t.label}</span></button>${mesure(t.id)}</div>`;
+    return tete(f.icone, 'Qu\'est-ce qui vous fait perdre du temps ?', 'Cochez les tâches de votre équipe, puis dites à quelle fréquence elles reviennent, combien de temps elles prennent et combien de personnes s\'en chargent.') +
     `<div class="exp-pill">${visages(f)}<span>L'équipe <b>${f.nom}</b> reprend ces tâches pour vous</span></div>` +
-    f.equipe.map(e => `<div class="grp"><div class="grp-h"><img src="${ph(e.photo)}" alt=""><span><b>${e.prenom}</b><i>${ic(e.icone)}${e.role}</i></span></div>
-      ${f.taches.filter(t => t.par === e.id).map(ligne).join('')}</div>`).join('') +
-    `<div class="task task-autre ${AUTRE in st.taches ? 'sel' : ''}" data-t="${AUTRE}"><div class="task-row"><button class="box" data-tache="${AUTRE}" style="cursor:pointer" aria-label="Cocher">${ic('check')}</button><input id="autre-l" placeholder="Une autre tâche ? Décrivez-la ici" value="${esc(st.autre)}"></div>${heures(AUTRE)}</div>
-    <div id="rank"></div>` + nav() + '</div>'; },
+    f.taches.map(ligne).join('') +
+    `<div class="task task-autre ${AUTRE in st.taches ? 'sel' : ''}" data-t="${AUTRE}"><div class="task-row"><button class="box" data-tache="${AUTRE}" style="cursor:pointer" aria-label="Cocher">${ic('check')}</button><input id="autre-l" placeholder="Une autre tâche ? Décrivez-la ici" value="${esc(st.autre)}"></div>${mesure(AUTRE)}</div>
+    <div class="tot" id="tot" hidden>${ic('clock')}<div><b id="tot-h">0 h</b> <span>perdues chaque semaine sur les tâches cochées</span></div></div>` + nav() + '</div>'; },
 
   metier: () => { const f = fct();
-    return tete('gauge', 'Votre activité en chiffres.', 'Trois ordres de grandeur pour dimensionner votre équipe, puis les outils que vous utilisez.') +
-    f.metier.map(q => `<div class="mq"><h3><span class="chip">${ic(q.icone)}</span>${q.question}</h3>${echelle('m-' + q.id, q.options, st.metier[q.id])}</div>`).join('') +
-    `<div class="tools"><p>${ic('zap')} Les outils de cette fonction</p><div class="logos" id="logos">${outils().map(o => `<button class="logo-b ${st.outils.includes(o) ? 'on' : ''}" data-outil="${esc(o)}">${logo(o)}${esc(o)}</button>`).join('')}</div>
-      <div class="add-tool"><input id="outil-in" placeholder="Un autre outil ? Ex. Zoho, Perfecto, Saari"><button data-a="addtool">${ic('plus')} Ajouter</button></div></div>` + nav() + '</div>'; },
+    return tete('wrench', 'Vos outils et vos coûts.', 'Les outils de cette fonction, puis une fourchette de salaire pour chiffrer ce que le temps perdu vous coûte.') +
+    `<div class="tools" style="margin-top:0"><p>${ic('zap')} Quels outils utilisez-vous pour cette fonction ?</p><div class="logos" id="logos">${outils().map(o => `<button class="logo-b ${st.outils.includes(o) ? 'on' : ''}" data-outil="${esc(o)}">${logo(o)}${esc(o)}</button>`).join('')}</div>
+      <div class="add-tool"><input id="outil-in" placeholder="Un autre outil ? Ex. Zoho, Perfecto, Saari"><button data-a="addtool">${ic('plus')} Ajouter</button></div></div>
+    <div class="sub-h">${ic('wallet')} Salaire mensuel moyen d'une personne de cette équipe</div>
+    <div class="cards c3">${D.salaires.map(x => carte('sal', x.id, x.v ? 'banknote' : 'lock', x.label, st.salaire === x.id)).join('')}</div>
+    <p class="lede" style="font-size:14px;margin-top:10px">Une fourchette suffit : elle sert seulement à chiffrer le montant économisé chaque mois.</p>` + nav() + '</div>'; },
 
-  vision: () => { const s = D.sections[0];
-    return tete(s.icone, 'Où en est l\'IA dans vos priorités ?', 'Une question, puis ce que vous attendez d\'abord.') + s.questions.map(mq).join('') +
-    `<div class="sub-h">${ic('target')} Qu'attendez-vous d'abord ?</div>
+  ia: () => { const s = D.sections[0];
+    return tete(s.icone, 'L\'IA chez vous.', s.lede) + s.questions.map(mq).join('') +
+    `<div class="sub-h">${ic('sparkles')} Quelles IA utilisez-vous ? <span style="font-weight:400;color:var(--muted);font-size:14px">(plusieurs choix)</span></div>
+    <div class="logos" id="ias">${listeIa()}</div>
+    <div class="add-tool"><input id="ia-in" placeholder="Une autre IA ? Ex. Grok, Canva IA"><button data-a="addia">${ic('plus')} Ajouter</button></div>
+    <div class="sub-h">${ic('target')} Qu'attendez-vous d'abord ?</div>
     <div class="cards c3">${D.objectifs.map(o => carte('obj', o.id, o.icone, o.label, st.objectif === o.id)).join('')}</div>` + nav() + '</div>'; },
-
-  sec: id => { const s = D.sections.find(x => x.id === id);
-    const lieux = s.lieux ? `<div class="sub-h" style="margin-top:0">${ic('folder-search')} Où se trouvent vos informations ? <span style="font-weight:400;color:var(--muted);font-size:14px">(plusieurs choix)</span></div>
-      <div class="logos" style="margin-bottom:18px">${D.infos.lieux.map(l => `<button class="logo-b ${st.lieux.includes(l.label) ? 'on' : ''}" data-lieu-info="${esc(l.label)}">${l.logo ? logo(l.logo) : `<span class="gen">${ic(l.icone)}</span>`}${l.label}</button>`).join('')}</div>` : '';
-    return tete(s.icone, s.nom + '.', s.lede) + lieux + s.questions.map(mq).join('') + nav() + '</div>'; },
 
   libre: () => tete('message-square-text', 'Racontez-nous.', 'Facultatif, mais c\'est ce qui nous aide le plus à préparer votre démonstration.') +
     `<div class="txt"><label>${ic('info')} D'autres irritants qui vous coûtent du temps ?</label><textarea id="irritants" placeholder="Ex. on ressaisit les commandes WhatsApp dans Excel, les relances se perdent…">${esc(st.libre.irritants)}</textarea></div>
@@ -665,32 +693,26 @@ const VUES = {
 
   analyse: () => `<div class="wrap analyse"><svg viewBox="0 0 480 480">${fleur('', 92)}<circle cx="240" cy="240" r="34" fill="#E4765A"/></svg>
     <h2>Le Déclic analyse vos réponses.</h2><ul class="steps-a">
-    <li>${ic('check')} Calcul du temps perdu, tâche par tâche</li><li>${ic('check')} Classement de vos priorités</li><li>${ic('check')} Répartition du travail dans votre équipe</li><li>${ic('check')} Note de maturité, section par section</li></ul></div>`,
+    <li>${ic('check')} Calcul du temps perdu, tâche par tâche</li><li>${ic('check')} Classement de vos priorités</li><li>${ic('check')} Répartition du travail dans votre équipe</li><li>${ic('check')} Montant économisé chaque mois</li></ul></div>`,
 
   resultat: () => resultat()
 };
+function listeIa(){ const l = D.ias.map(x => x.label); st.ias.forEach(x => { if (!l.includes(x)) l.push(x); });
+  return l.map(x => { const d = D.ias.find(y => y.label === x); return `<button class="logo-b ${st.ias.includes(x) ? 'on' : ''}" data-ia="${esc(x)}">${d ? `<img src="assets/logos/${d.logo}" alt="">` : `<span class="gen">${ic('sparkles')}</span>`}${esc(x)}</button>`; }).join(''); }
 function outils(){ const l = fct().outils.slice(); st.outils.forEach(o => { if (!l.includes(o)) l.push(o); }); return l; }
 
-function majClassement(){
-  const el = document.getElementById('rank'); if (!el) return;
-  st.ordre = st.ordre.filter(t => t in st.taches);
-  const o = st.ordre;
-  if (o.length < 2) { el.innerHTML = ''; return; }
-  el.innerHTML = `<div class="rank"><h3>${ic('trending-up')} Classez-les, de la plus pénible à la moins pénible</h3><p>Glissez les lignes, ou utilisez les flèches.</p><ol>${o.map((t, i) => { const x = tache(t); return `<li draggable="true" data-r="${t}"><span class="grip">${ic('grip-vertical')}</span><span class="n">${i + 1}</span><span class="l">${esc(x.t.label)}</span>${x.x ? `<img class="rk-x" src="${ph(x.x.photo)}" alt="${esc(x.x.prenom)}" title="${esc(x.x.prenom)}">` : ''}<button class="mv" data-mv="-1" data-r="${t}" ${i === 0 ? 'disabled' : ''} aria-label="Monter">${ic('chevron-up')}</button><button class="mv" data-mv="1" data-r="${t}" ${i === o.length - 1 ? 'disabled' : ''} aria-label="Descendre">${ic('chevron-down')}</button></li>`; }).join('')}</ol></div>`;
-  let src = null;
-  el.querySelectorAll('li').forEach(li => {
-    li.addEventListener('dragstart', () => { src = li.dataset.r; li.classList.add('drag'); });
-    li.addEventListener('dragend', () => li.classList.remove('drag'));
-    li.addEventListener('dragover', e => { e.preventDefault(); li.classList.add('over'); });
-    li.addEventListener('dragleave', () => li.classList.remove('over'));
-    li.addEventListener('drop', e => { e.preventDefault(); const L = st.ordre, a = L.indexOf(src), b = L.indexOf(li.dataset.r); if (a < 0 || b < 0) return; L.splice(b, 0, L.splice(a, 1)[0]); majClassement(); });
-  });
+// Le classement se calcule (vocal 2 de Kirane) : la tâche qui coûte le plus d'heures est la plus pénible.
+function majTotal(){
+  app.querySelectorAll('[data-calc]').forEach(el => { const h = heuresT(el.dataset.calc); el.innerHTML = h ? `${ic('timer')} Environ ${nb(h)} h par semaine` : ''; });
+  const t = document.getElementById('tot'); if (!t) return;
+  const tot = Object.keys(st.taches).reduce((a, k) => a + heuresT(k), 0);
+  t.hidden = !tot; document.getElementById('tot-h').textContent = nb(tot) + ' h';
 }
 const APRES = {
   analyse: () => { const li = document.querySelectorAll('.steps-a li'); li.forEach((l, i) => setTimeout(() => l.classList.add('on'), 350 + i * 420)); setTimeout(suiv, 2300); },
   resultat: () => animer(),
   profil: () => document.getElementById('nom').focus(),
-  taches: () => { majClassement(); const a = document.getElementById('autre-l'); a.addEventListener('input', () => { st.autre = a.value.trim(); if (st.autre && !(AUTRE in st.taches)) cocher(AUTRE, true); majClassement(); }); }
+  taches: () => { majTotal(); const a = document.getElementById('autre-l'); a.addEventListener('input', () => { st.autre = a.value.trim(); if (st.autre && !(AUTRE in st.taches)) cocher(AUTRE, true); }); }
 };
 
 // Contrôles avant de passer à l'écran suivant : un message clair plutôt qu'un bouton mort.
@@ -705,33 +727,33 @@ function verifier(){
   if (nom === 'secteur') { st.secteurAutre = (document.getElementById('secteurAutre') || {}).value || ''; if (!st.secteur) return err('Choisissez un secteur.'); if (D.secteurs.find(s => s.autre).label === st.secteur && !st.secteurAutre.trim()) return err('Précisez votre secteur.'); }
   if (nom === 'equipes' && !st.lieu) return err('Dites-nous où travaillent vos équipes.');
   if (nom === 'fonction' && !st.fonction) return err('Choisissez au moins une fonction.');
-  if (nom === 'metier') { const n = fct().metier.filter(q => st.metier[q.id] == null).length; if (n) return err(n > 1 ? `Il reste ${n} questions.` : 'Il reste une question.'); }
+  if (nom === 'metier' && !st.salaire) return err('Choisissez une fourchette de salaire, ou « Je préfère ne pas répondre ».');
   if (nom === 'taches') {
     const c = Object.keys(st.taches);
     if (!c.length) return err('Cochez au moins une tâche qui vous fait perdre du temps.');
-    const manque = c.filter(t => !(st.taches[t] > 0));
-    if (manque.length) { const el = app.querySelector(`.task[data-t="${manque[0]}"]`); el.classList.remove('manque'); void el.offsetWidth; el.classList.add('manque'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); return err(`Indiquez le temps perdu pour ${manque.length > 1 ? 'les ' + manque.length + ' tâches cochées en rouge' : 'la tâche en rouge'}.`); }
+    const manque = c.filter(t => !heuresT(t));
+    if (manque.length) { const el = app.querySelector(`.task[data-t="${manque[0]}"]`); el.classList.remove('manque'); void el.offsetWidth; el.classList.add('manque'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); return err(`Répondez aux trois menus pour ${manque.length > 1 ? 'les ' + manque.length + ' tâches en rouge' : 'la tâche en rouge'}.`); }
   }
-  if (nom === 'vision') { if (st.mat.v1 == null) return err('Répondez à la question sur vos priorités.'); if (!st.objectif) return err('Choisissez votre attente principale.'); }
-  if (nom === 'sec') { const s = D.sections.find(x => x.id === arg), n = s.questions.filter(q => st.mat[q.id] == null).length; if (n) return err(n > 1 ? `Il reste ${n} questions.` : 'Il reste une question.'); }
+  if (nom === 'ia') { const n = D.sections[0].questions.filter(q => st.mat[q.id] == null).length; if (n) return err(n > 1 ? `Il reste ${n} questions.` : 'Il reste une question.'); if (!st.objectif) return err('Choisissez votre attente principale.'); }
   if (nom === 'libre') { st.libre.irritants = document.getElementById('irritants').value.trim(); st.libre.automatiser = document.getElementById('automatiser').value.trim(); }
   return true;
 }
 function cocher(tid, on){
   const box = app.querySelector(`.task[data-t="${tid}"]`);
-  if (on) { if (!(tid in st.taches)) st.taches[tid] = 0; if (!st.ordre.includes(tid)) st.ordre.push(tid); }
-  else { delete st.taches[tid]; st.ordre = st.ordre.filter(x => x !== tid); }
+  if (on) { if (!(tid in st.taches)) st.taches[tid] = {}; }
+  else delete st.taches[tid];
   box.classList.toggle('sel', on); box.classList.remove('manque');
-  if (!on) box.querySelectorAll('.hb').forEach(h => h.classList.remove('on'));
-  majClassement();
+  if (!on) box.querySelectorAll('select').forEach(x => { x.value = ''; x.classList.remove('ok'); });
+  majTotal();
 }
 
 function calcul(){
   const f = fct(), liste = [];
-  st.ordre.forEach((tid, rang) => { const h = st.taches[tid]; if (h > 0) liste.push({ ...tache(tid), h, rang, score: h * (rang === 0 ? 1.3 : rang === 1 ? 1.15 : 1) }); });
-  // Les trois priorités suivent d'abord le classement de la personne, le temps départage.
-  const prio = liste.slice().sort((a, b) => a.rang - b.rang).slice(0, 3);
+  Object.keys(st.taches).forEach(tid => { const h = heuresT(tid); if (h > 0) liste.push({ ...tache(tid), h, det: detailT(tid) }); });
+  // Classement automatique : la tâche qui coûte le plus d'heures passe en tête.
+  const prio = liste.slice().sort((a, b) => b.h - a.h).slice(0, 3);
   const total = liste.reduce((s, x) => s + x.h, 0), repris = total * D.partReprise;
+  const etp = repris / 40, euros = repris * 4.33 * salaire() / D.heuresMois;
   const parX = f.equipe.map(e => ({ e, t: liste.filter(x => x.x && x.x.id === e.id), h: liste.filter(x => x.x && x.x.id === e.id).reduce((s, x) => s + x.h, 0) }));
   const secs = D.sections.map(s => { const qs = s.questions.filter(q => !q.horsNote), v = qs.reduce((a, q) => a + (st.mat[q.id] || 0), 0), moy = v / qs.length;
     return { s, pct: Math.round(v / (3 * qs.length) * 100), i: Math.min(3, Math.floor(moy)) }; });
@@ -739,7 +761,7 @@ function calcul(){
   const note = Math.round(toutes.reduce((a, q) => a + (st.mat[q.id] || 0), 0) / (3 * toutes.length) * 100);
   const niv = [...D.niveaux].reverse().find(n => note >= n.min);
   const faible = secs.slice().sort((a, b) => a.pct - b.pct)[0];
-  return { f, liste, prio, total, repris, parX, secs, note, niv, faible };
+  return { f, liste, prio, total, repris, etp, euros, parX, secs, note, niv, faible };
 }
 function resultat(){
   const R = calcul(), f = R.f, p = st.profil, prenom = (p.nom || '').split(' ')[0], maxX = Math.max(1, ...R.parX.map(x => x.h));
@@ -758,15 +780,16 @@ function resultat(){
         <h2>${prenom ? esc(prenom) + ', votre' : 'Votre'} Déclic est prêt.</h2>
         <span class="lvl">${ic('rocket')} ${R.niv.nom}</span><p>${R.niv.texte.replace(/un Expert IA/g, 'votre équipe d\'Experts IA').replace(/Un Expert IA/g, 'Votre équipe d\'Experts IA').replace(/deux Experts IA peuvent/g, 'une équipe d\'Experts IA peut')}</p></div>
     </div>
-    <div class="kpis">
+    <div class="kpis k4">
       <div class="kpi k1"><span class="chip">${ic('clock')}</span><div><b><span class="cnt" data-to="${R.total}">0</span><small>h</small></b><span>perdues par semaine</span></div></div>
-      <div class="kpi"><span class="chip">${ic('rotate-ccw')}</span><div><b><span class="cnt" data-to="${R.repris}">0</span><small>h</small></b><span>reprises par votre équipe</span></div></div>
-      <div class="kpi"><span class="chip">${ic('calendar')}</span><div><b><span class="cnt" data-to="${R.repris * 4.33 / 8}">0</span><small>jours</small></b><span>rendus à vos équipes par mois</span></div></div>
+      <div class="kpi"><span class="chip">${ic('rotate-ccw')}</span><div><b><span class="cnt" data-to="${R.repris}">0</span><small>h</small></b><span>reprises par votre équipe d'Experts</span></div></div>
+      <div class="kpi"><span class="chip">${ic('users')}</span><div><b><span class="cnt" data-to="${R.etp}">0</span><small>poste${R.etp >= 2 ? 's' : ''}</small></b><span>à temps plein libéré${R.etp >= 2 ? 's' : ''} pour d'autres missions</span></div></div>
+      <div class="kpi k4m"><span class="chip">${ic('banknote')}</span><div><b><span class="cnt" data-to="${R.euros}" data-fmt="f">0</span><small>F</small></b><span>économisés chaque mois${st.salaire === 's0' ? ' (salaire moyen estimé)' : ''}</span></div></div>
     </div>
 
-    ${num('01', 'Vos trois priorités', "Les tâches que vous avez classées les plus pénibles, et l'Expert de l'équipe qui les reprend.")}
+    ${num('01', 'Vos trois priorités', "Les tâches qui vous coûtent le plus d'heures, et l'Expert de l'équipe qui les reprend.")}
     <div class="pains">${R.prio.map((x, i) => `<div class="pain"><div class="rk"><span class="pn">${i + 1}</span><span>Priorité ${i + 1}</span></div><h4>${esc(x.t.label)}</h4>
-      <span class="h">${ic('clock')} ${nb(x.h)} h par semaine aujourd'hui</span><p>${x.t.fait}</p>
+      <span class="h">${ic('clock')} ${nb(x.h)} h par semaine aujourd'hui</span><span class="det">${esc(x.det.charAt(0).toUpperCase() + x.det.slice(1))}</span><p>${x.t.fait}</p>
       ${x.x ? `<div class="who"><img src="${ph(x.x.photo)}" alt=""><span><b>${x.x.prenom}</b>, ${x.x.role.toLowerCase()}</span></div>` : ''}</div>`).join('')}</div>
     ${quote}
 
@@ -779,11 +802,11 @@ function resultat(){
       <ul>${(x.t.length ? x.t.map(y => y.t) : f.taches.filter(t => t.par === x.e.id).slice(0, 2)).map(t => `<li>${ic('check')}${esc(t.label)}</li>`).join('')}</ul>
       <div class="tm-b"><div class="track"><div class="fill" data-w="${x.h / maxX * 100}"></div></div><span>${x.h ? `${ic('timer')} ${nb(x.h * D.partReprise)} h rendues par semaine` : 'En renfort de l\'équipe'}</span></div></div>`).join('')}</div>
 
-    ${num('03', 'Votre maturité, section par section', 'Pour chaque section, votre niveau, la prochaine étape et le piège à éviter.')}
-    <div class="secs">${R.secs.map(x => `<div class="sx ${x === R.faible ? 'faible' : ''}"><div class="sx-h"><span class="chip">${ic(x.s.icone)}</span><b>${x.s.nom}</b><span class="nv">${NIV_SEC[x.i]}</span><span class="pc">${x.pct}<small>/100</small></span></div>
+    ${num('03', 'L\'IA chez vous', 'Votre niveau d\'usage, la prochaine étape et le piège à éviter.')}
+    <div class="secs ${R.secs.length === 1 ? 'un' : ''}">${R.secs.map(x => `<div class="sx ${x === R.faible ? 'faible' : ''}"><div class="sx-h"><span class="chip">${ic(x.s.icone)}</span><b>${x.s.nom}</b><span class="nv">${NIV_SEC[x.i]}</span><span class="pc">${x.pct}<small>/100</small></span></div>
       <div class="track"><div class="fill" data-w="${Math.max(4, x.pct)}"></div></div>
       <p class="nx">${ic('arrow-right')}<span><b>Prochaine étape :</b> ${x.s.etapes[x.i]}</span></p>
-      <p class="pg">${ic('shield')}<span><b>À éviter :</b> ${x.s.piege}</span></p></div>`).join('')}</div>
+      <p class="pg">${ic('shield')}<span><b>À éviter :</b> ${x.s.piege}</span></p>${st.ias.length ? `<div class="ia-l">${st.ias.map(n => { const d = D.ias.find(y => y.label === n); return `<span>${d ? `<img src="assets/logos/${d.logo}" alt="">` : ''}${esc(n)}</span>`; }).join('')}</div>` : ''}</div>`).join('')}</div>
 
     <div class="pdf" data-html2canvas-ignore><div class="pdf-ic">${ic('file-text')}</div><div><h3>Téléchargez votre plan en PDF.</h3><p>Votre note, vos priorités, votre équipe et vos prochaines étapes, section par section : un document à partager avec votre direction.</p></div>
       <button class="btn btn-p" data-a="telecharger">${ic('download')} Télécharger le PDF</button></div>
@@ -794,14 +817,14 @@ function resultat(){
       <p>En une heure de démonstration, nous montrons votre équipe d'Experts au travail sur vos trois priorités, dans vos propres outils${f2 ? `, puis ce que l'équipe ${esc(f2.nom)} peut reprendre` : ''}.</p></div>
       <div class="cta"><div class="stack">${f.equipe.map(e => `<img src="${ph(e.photo)}" alt="${e.prenom}">`).join('')}<img src="${ph('av-chiefofstaff-sq.jpg')}" alt="Djénéba"></div>
         <button class="btn btn-w btn-big" data-a="demo">${ic('calendar')} Réserver ma démonstration</button></div></div>
-    <p class="note" data-html2canvas-ignore>Estimation : une équipe d'Experts reprend environ ${Math.round(D.partReprise * 100)} % du temps déclaré ; un mois compte 4,33 semaines et une journée 8 heures. La note de maturité vient de vos réponses aux sections 3 à 6.</p>
+    <p class="note" data-html2canvas-ignore>Estimation : une équipe d'Experts reprend environ ${Math.round(D.partReprise * 100)} % du temps déclaré ; un mois compte 4,33 semaines, un poste à temps plein 40 heures par semaine et ${D.heuresMois} heures par mois, sur un salaire mensuel de ${fcfa(salaire())} F${st.salaire === 's0' ? ' (moyenne retenue faute de réponse)' : ''}. La note de maturité vient de la section « L'IA chez vous ».</p>
     <div class="nav fin" data-html2canvas-ignore><button class="btn btn-g" data-a="refaire">${ic('rotate-ccw')} Modifier mes réponses</button></div></div>`;
 }
 
 // Maquette : rien ne part vers Tally ni vers le CRM. Le PDF se télécharge sur place (25/10, vocal 59754).
 function animer(){
   setTimeout(() => { document.querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%'); document.getElementById('ringc').style.strokeDashoffset = 326.7 * (1 - calcul().note / 100); }, 80);
-  document.querySelectorAll('.cnt').forEach(el => { const to = +el.dataset.to, t0 = performance.now(); const pas = t => { const k = Math.min(1, (t - t0) / 1300), e = 1 - Math.pow(1 - k, 3); el.textContent = nb(to * e); if (k < 1) requestAnimationFrame(pas); }; requestAnimationFrame(pas); });
+  document.querySelectorAll('.cnt').forEach(el => { const to = +el.dataset.to, t0 = performance.now(); const pas = t => { const k = Math.min(1, (t - t0) / 1300), e = 1 - Math.pow(1 - k, 3); el.textContent = el.dataset.fmt === 'f' ? fcfa(to * e) : nb(to * e); if (k < 1) requestAnimationFrame(pas); }; requestAnimationFrame(pas); });
 }
 
 // Le PDF se fabrique dans le navigateur (vocal 59754 : « ça doit télécharger, pas imprimer »).
@@ -816,7 +839,7 @@ async function telecharger(b){
   const zone = document.createElement('div'); zone.className = 'pdf-zone';
   const c = document.getElementById('rapport').cloneNode(true); c.removeAttribute('id'); c.classList.add('pdf-mode');
   c.querySelectorAll('[data-html2canvas-ignore]').forEach(x => x.remove());
-  c.querySelectorAll('.cnt').forEach(x => x.textContent = nb(+x.dataset.to));
+  c.querySelectorAll('.cnt').forEach(x => x.textContent = x.dataset.fmt === 'f' ? fcfa(+x.dataset.to) : nb(+x.dataset.to));
   c.querySelectorAll('.fill').forEach(x => x.style.width = x.dataset.w + '%');
   const r = c.querySelector('#ringc'); if (r) { r.removeAttribute('id'); r.setAttribute('stroke', '#8D68FA'); r.style.transition = 'none'; r.style.strokeDashoffset = 326.7 * (1 - calcul().note / 100); }
   zone.appendChild(c); document.body.appendChild(zone);
@@ -853,7 +876,7 @@ const modal = document.getElementById('ylmodal');
 function ouvrirDemo(){
   const fm = document.getElementById('ylmform'), p = st.profil, R = calcul(), f2 = D.fonctions.find(x => x.id === st.fonction2);
   fm.nom.value = p.nom || ''; fm.societe.value = p.entreprise || ''; fm.email.value = p.email || ''; fm.metier.value = METIER_SITE[st.fonction] || '';
-  fm.message.value = [`Le Déclic : ${R.note}/100, ${nb(R.total)} h perdues par semaine.`, 'Priorités : ' + R.prio.map(x => x.t.label).join(' ; ') + '.', f2 ? `Deuxième fonction : ${f2.nom}.` : ''].filter(Boolean).join('\n');
+  fm.message.value = [`Le Déclic : ${R.note}/100, ${nb(R.total)} h perdues par semaine, environ ${fcfa(R.euros)} F économisables par mois.`, 'Priorités : ' + R.prio.map(x => x.t.label).join(' ; ') + '.', f2 ? `Deuxième fonction : ${f2.nom}.` : ''].filter(Boolean).join('\n');
   document.getElementById('ylm-ok').hidden = true; modal.hidden = false; document.body.style.overflow = 'hidden'; fm.querySelector('[name=tel]').focus();
 }
 function fermerDemo(){ modal.hidden = true; document.body.style.overflow = ''; }
@@ -882,6 +905,7 @@ app.addEventListener('click', e => {
   if (a === 'suiv') { if (verifier()) suiv(); return; }
   if (a === 'telecharger') return telecharger(b);
   if (a === 'demo') return ouvrirDemo();
+  if (a === 'addia') { const inp = document.getElementById('ia-in'), v = inp.value.trim(); if (!v) return; if (!st.ias.includes(v)) st.ias.push(v); document.getElementById('ias').innerHTML = listeIa(); inp.value = ''; return; }
   if (a === 'addtool') { const inp = document.getElementById('outil-in'), v = inp.value.trim(); if (!v) return; if (!st.outils.includes(v)) st.outils.push(v); document.getElementById('logos').innerHTML = outils().map(o => `<button class="logo-b ${st.outils.includes(o) ? 'on' : ''}" data-outil="${esc(o)}">${logo(o)}${esc(o)}</button>`).join(''); inp.value = ''; return; }
   const choix = k => app.querySelectorAll(`[data-${k}]`).forEach(c => c.classList.toggle('sel', c === b));
   if (b.dataset.taille) { st.taille = b.dataset.taille; choix('taille'); return setTimeout(suiv, 380); }
@@ -889,23 +913,31 @@ app.addEventListener('click', e => {
   if (b.dataset.eff) { const k = b.dataset.eff; st.effectifs[k] = st.effectifs[k] === b.dataset.t ? null : b.dataset.t; b.parentNode.querySelectorAll('.hb').forEach(h => h.classList.toggle('on', h.dataset.t === st.effectifs[k])); return; }
   if (b.dataset.secteur) { st.secteur = b.dataset.secteur; choix('secteur'); const autre = D.secteurs.find(s => s.autre).label === st.secteur, box = document.getElementById('sect-autre'); box.style.display = autre ? '' : 'none'; if (autre) document.getElementById('secteurAutre').focus(); else setTimeout(suiv, 380); return; }
   if (b.dataset.fct) { const id = b.dataset.fct;
-    if (st.fonction === id) { st.fonction = st.fonction2; st.fonction2 = null; st.taches = {}; st.ordre = []; st.outils = []; st.metier = {}; st.autre = ''; }
+    if (st.fonction === id) { st.fonction = st.fonction2; st.fonction2 = null; st.taches = {}; st.outils = []; st.autre = ''; }
     else if (st.fonction2 === id) st.fonction2 = null;
     else if (!st.fonction) st.fonction = id;
     else st.fonction2 = id;
     app.innerHTML = `<section class="screen on fixe">${VUES.fonction()}</section>`; return; }
+  if (b.dataset.sal) { st.salaire = b.dataset.sal; choix('sal'); return; }
+  if (b.dataset.ia) { const l = st.ias, v = b.dataset.ia, i = l.indexOf(v); i < 0 ? l.push(v) : l.splice(i, 1); b.classList.toggle('on', i < 0); return; }
   if (b.dataset.obj) { st.objectif = b.dataset.obj; choix('obj'); return; }
   if (b.dataset.tache) { const id = b.dataset.tache; return cocher(id, !(id in st.taches)); }
-  if (b.dataset.h) { const id = b.dataset.tt; if (!(id in st.taches)) cocher(id, true); st.taches[id] = +b.dataset.h; b.parentNode.querySelectorAll('.hb').forEach(h => h.classList.toggle('on', h === b)); b.closest('.task').classList.remove('manque'); return; }
   if (b.dataset.outil) { const l = st.outils, o = b.dataset.outil, i = l.indexOf(o); i < 0 ? l.push(o) : l.splice(i, 1); b.classList.toggle('on', i < 0); return; }
-  if (b.dataset.lieuInfo) { const l = st.lieux, v = b.dataset.lieuInfo, i = l.indexOf(v); i < 0 ? l.push(v) : l.splice(i, 1); b.classList.toggle('on', i < 0); return; }
-  if (b.dataset.mv) { const L = st.ordre, i = L.indexOf(b.dataset.r), j = i + +b.dataset.mv; [L[i], L[j]] = [L[j], L[i]]; return majClassement(); }
-  if (b.dataset.q) { const q = b.dataset.q, v = +b.dataset.v; if (q.startsWith('m-')) st.metier[q.slice(2)] = v; else st.mat[q] = v; b.parentNode.querySelectorAll('.sc').forEach(s => s.classList.toggle('on', s === b)); return; }
+  if (b.dataset.q) { const q = b.dataset.q, v = +b.dataset.v; st.mat[q] = v; b.parentNode.querySelectorAll('.sc').forEach(s => s.classList.toggle('on', s === b)); return; }
+});
+// Les trois menus d'une tâche : la tâche se coche dès qu'on répond, l'estimation se met à jour.
+app.addEventListener('change', e => {
+  const x = e.target; if (!x.dataset || !x.dataset.m) return;
+  const id = x.dataset.tt; if (!(id in st.taches)) cocher(id, true);
+  st.taches[id][x.dataset.m] = x.value || null; x.classList.toggle('ok', !!x.value);
+  if (heuresT(id)) x.closest('.task').classList.remove('manque');
+  majTotal();
 });
 app.addEventListener('keydown', e => {
   if (e.key !== 'Enter' || e.target.tagName !== 'INPUT') return;
   e.preventDefault();
   if (e.target.id === 'outil-in') return app.querySelector('[data-a="addtool"]').click();
+  if (e.target.id === 'ia-in') return app.querySelector('[data-a="addia"]').click();
   if (e.target.id !== 'autre-l') document.getElementById('go').click();
 });
 aller(0);

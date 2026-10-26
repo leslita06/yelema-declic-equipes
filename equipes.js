@@ -299,3 +299,65 @@ D.sections = [
     piege: "Dépendre de deux ou trois volontaires impossibles à remplacer." }
 ];
 })();
+
+// Retours de Kirane sur le Déclic (26/10/26, 8 vocaux, Leslie « A » msg 60910) : chaque tâche se mesure
+// par sa fréquence, le temps qu'elle prend à chaque fois et le nombre de personnes qui s'en chargent.
+// Heures par semaine = fois par semaine x heures à chaque fois x personnes.
+(function(){
+const D = window.DECLIC;
+D.frequences = [
+  { id: "jour", label: "Tous les jours", parSemaine: 5 },
+  { id: "semaine", label: "Chaque semaine", parSemaine: 1 },
+  { id: "mois", label: "Chaque mois", parSemaine: 12 / 52 }
+];
+D.durees = [
+  { id: "d1", label: "Moins de 30 min", heures: 0.25 },
+  { id: "d2", label: "30 min à 1 h", heures: 0.75 },
+  { id: "d3", label: "1 à 2 h", heures: 1.5 },
+  { id: "d4", label: "2 à 4 h", heures: 3 },
+  { id: "d5", label: "Plus de 4 h", heures: 6 }
+];
+D.personnes = [
+  { id: "p1", label: "1 personne", n: 1 },
+  { id: "p2", label: "2 à 3 personnes", n: 2.5 },
+  { id: "p3", label: "4 à 5 personnes", n: 4.5 },
+  { id: "p4", label: "6 à 10 personnes", n: 8 },
+  { id: "p5", label: "Plus de 10 personnes", n: 12 }
+];
+// Une fourchette, jamais le salaire réel : une entreprise ne le donne pas au premier contact (vocal 3 de Kirane).
+// Sans réponse, le calcul prend 350 000 F, et le rapport le dit.
+D.salaires = [
+  { id: "s1", label: "Moins de 200 000 F", v: 150000 },
+  { id: "s2", label: "200 000 à 400 000 F", v: 300000 },
+  { id: "s3", label: "400 000 à 700 000 F", v: 550000 },
+  { id: "s4", label: "700 000 F à 1,2 M F", v: 950000 },
+  { id: "s5", label: "Plus de 1,2 M F", v: 1500000 },
+  { id: "s0", label: "Je préfère ne pas répondre", v: null }
+];
+D.salaireDefaut = 350000;
+D.heuresMois = 173;
+D.ias = [
+  { label: "ChatGPT", logo: "ia-chatgpt.png" }, { label: "Gemini", logo: "ia-gemini.png" },
+  { label: "Copilot", logo: "ia-copilot.png" }, { label: "Claude", logo: "ia-claude.png" },
+  { label: "Meta AI", logo: "ia-metaai.png" }, { label: "Le Chat (Mistral)", logo: "ia-mistral.png" },
+  { label: "DeepSeek", logo: "ia-deepseek.png" }, { label: "Perplexity", logo: "ia-perplexity.png" }
+];
+// « Où en est l'IA dans vos priorités » et « Vos équipes et l'IA » ne font plus qu'une rubrique, en chiffres.
+// Données et accès, Organisation et confiance : retirées, trop tôt dans la vente (vocaux 6 et 7).
+D.sections = [
+  { id: "ia", icone: "brain-circuit", nom: "L'IA chez vous", lede: "À quel point vos équipes utilisent l'IA aujourd'hui, et laquelle.",
+    questions: [
+      { id: "u1", icone: "calendar", question: "À quelle fréquence vos équipes utilisent-elles l'IA ?",
+        reponses: ["Jamais", "Quelques fois par mois", "Chaque semaine", "Chaque jour"] },
+      { id: "u2", icone: "users", question: "Quelle part de l'équipe s'en sert ?",
+        reponses: ["Personne", "Moins d'un quart", "Environ la moitié", "Presque tout le monde"] }
+    ],
+    etapes: [
+      "Organisez une heure de démonstration sur vos propres tâches pour montrer ce que l'IA fait bien, et ce qu'elle fait mal.",
+      "Rassemblez les bonnes pratiques de ceux qui utilisent déjà l'IA et partagez-les chaque mois.",
+      "Passez des outils grand public à une équipe d'Experts branchée sur vos outils et vos règles.",
+      "Mesurez le temps rendu tâche par tâche et mettez vos moyens sur ce qui rapporte."
+    ],
+    piege: "Laisser chacun utiliser une IA différente, sans règle sur les informations qu'on lui confie." }
+];
+})();
