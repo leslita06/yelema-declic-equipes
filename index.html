@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>L'Audit IA, par Yelema</title>
+<title>L'Auditeur d'entreprise, par Yelema</title>
 <meta name="description" content="En cinq minutes, voyez où votre fonction perd du temps et quelle équipe d'Experts IA le reprend.">
 <link rel="icon" href="assets/logo/yelema-icon.png">
 <style>
@@ -517,7 +517,7 @@ body{background:#F8F7FC}
 </head>
 <body>
 <header class="top"><div class="wrap in">
-  <a class="logo-l" href="#" aria-label="Revenir à l'accueil de l'audit IA"><img class="logo" src="assets/logo/yelema-logo.png" alt="Yelema"></a>
+  <a class="logo-l" href="#" aria-label="Revenir à l'accueil de l'Auditeur d'entreprise"><img class="logo" src="assets/logo/yelema-logo.png" alt="Yelema"></a>
   <div class="prog-w"><div class="stepn" id="stepn"></div><div class="prog" aria-hidden="true"><i id="prog"></i></div></div>
   <svg class="mini" id="mini" viewBox="0 0 480 480" aria-hidden="true"></svg>
 </div></header>
@@ -595,7 +595,7 @@ function aller(n){
   document.getElementById('prog').style.width = (f * 100) + '%'; majMini(f);
   // Déclic fini : seule la fleur qui tourne reste, pas la petite fleur de l'en-tête (msg 59778-59779).
   document.getElementById('mini').style.display = nom === 'analyse' || nom === 'resultat' ? 'none' : '';
-  document.getElementById('stepn').textContent = nom === 'accueil' ? 'Cinq minutes' : s ? `Section ${s} sur ${SECTIONS.length}` : 'Votre audit IA';
+  document.getElementById('stepn').textContent = nom === 'accueil' ? 'Cinq minutes' : s ? `Section ${s} sur ${SECTIONS.length}` : 'Votre audit';
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (APRES[nom]) APRES[nom](arg);
 }
@@ -614,10 +614,10 @@ const visages = (f, n) => `<span class="stack-s">${f.equipe.slice(0, n || 4).map
 
 const VUES = {
   accueil: () => `<div class="hero" style="margin-top:-40px"><div class="wrap in">
-      <div><div class="eyebrow">L'Audit IA, par Yelema</div>
+      <div><div class="eyebrow">L'Auditeur d'entreprise, par Yelema</div>
         <h1>Voyez où votre entreprise <em>perd du temps</em>.</h1>
         <p>Repérez vos tâches les plus pénibles, mesurez le temps qu'elles vous coûtent et découvrez l'équipe d'Experts IA qui les reprend.</p>
-        <button class="btn btn-p btn-big" data-a="suiv">${ic('sparkles')} Faire mon audit IA</button>
+        <button class="btn btn-p btn-big" data-a="suiv">${ic('sparkles')} Lancer mon audit</button>
         <div class="perks"><span>${ic('timer')} 5 minutes</span><span>${ic('gauge')} Résultat immédiat</span><span>${ic('file-text')} Votre plan en PDF</span></div>
       </div>
       <div style="position:relative">
@@ -628,12 +628,12 @@ const VUES = {
         <div class="floaty" style="right:-6px;bottom:2%;animation-delay:3.6s"><img src="${ph('av-aminata-sq.jpg')}" alt="">4. Aminata suit vos ventes</div>
       </div></div></div>
     <div class="wrap etapes">${[['list-checks', 'Vos tâches', 'Choisissez vos fonctions et les tâches qui vous prennent le plus de temps.'],
-      ['clock', 'Votre temps perdu', 'L\'audit chiffre les heures perdues et ce qu\'elles vous coûtent chaque mois.'],
+      ['clock', 'Votre temps perdu', 'L\'Auditeur chiffre les heures perdues et ce qu\'elles vous coûtent chaque mois.'],
       ['users', 'Votre équipe d\'Experts', 'Vous découvrez les Experts qui reprennent ces tâches, et recevez votre plan en PDF.']]
       .map(([i, t, d], k) => `<div class="etape"><span class="n">${k + 1}</span><span class="chip">${ic(i)}</span><b>${t}</b><p>${d}</p></div>`).join('')}</div>`,
 
   profil: () => { const p = st.profil;
-    return tete('user', 'Qui êtes-vous ?', 'Pour adapter l\'audit à votre poste et vous envoyer votre plan.') +
+    return tete('user', 'Qui êtes-vous ?', 'Pour adapter l\'Auditeur à votre poste et vous envoyer votre plan.') +
     `<div class="form">
       <div class="fld">${ic('user')}<label>Prénom et nom<input id="nom" autocomplete="name" placeholder="Awa Koné" value="${esc(p.nom)}"></label></div>
       <div class="fld">${ic('mail')}<label>Email professionnel<input id="email" type="email" autocomplete="email" placeholder="awa@entreprise.ci" value="${esc(p.email)}"></label></div>
@@ -645,7 +645,7 @@ const VUES = {
     `<div class="cards c4">${D.tailles.map(t => carte('taille', t.label, t.icone, t.label, st.taille === t.label)).join('')}</div>` + nav() + '</div>',
 
   secteur: () => { const autre = D.secteurs.find(s => s.autre);
-    return tete('globe', 'Dans quel secteur travaillez-vous ?', 'L\'audit adapte ses exemples à votre métier.') +
+    return tete('globe', 'Dans quel secteur travaillez-vous ?', 'L\'Auditeur adapte ses exemples à votre métier.') +
     `<div class="cards c4">${D.secteurs.map(t => carte('secteur', t.label, t.icone, t.label, st.secteur === t.label)).join('')}</div>
     <div class="fld autre-in" id="sect-autre" style="${st.secteur === autre.label ? '' : 'display:none'}">${ic('pencil-line')}<label>Votre secteur<input id="secteurAutre" placeholder="Ex. cosmétique, sécurité privée" value="${esc(st.secteurAutre)}"></label></div>` + nav() + '</div>'; },
 
@@ -654,7 +654,7 @@ const VUES = {
     <div class="sub-h">${ic('users')} Combien de personnes, à peu près, à chaque niveau ? <span style="font-weight:400;color:var(--muted);font-size:14px">(facultatif)</span></div>
     <div class="levels">${D.equipes.niveaux.map(n => `<div class="lvl-r"><span class="t"><span class="chip">${ic(n.icone)}</span>${n.label}</span><div class="opts">${D.equipes.tranches.map(t => `<button class="hb ${st.effectifs[n.id] === t ? 'on' : ''}" data-eff="${n.id}" data-t="${t}">${t}</button>`).join('')}</div></div>`).join('')}</div>` + nav() + '</div>',
 
-  fonction: () => tete('layers', 'Quelles fonctions voulez-vous soulager ?', 'Choisissez celle qui vous coûte le plus, et une deuxième si vous le souhaitez. L\'audit détaille la première.') +
+  fonction: () => tete('layers', 'Quelles fonctions voulez-vous soulager ?', 'Choisissez celle qui vous coûte le plus, et une deuxième si vous le souhaitez. L\'Auditeur détaille la première.') +
     `<div class="fcts">${D.fonctions.map(f => { const r = st.fonction === f.id ? 1 : st.fonction2 === f.id ? 2 : 0;
       return `<button class="fct ${r ? 'sel' : ''}" data-fct="${f.id}"><span class="tick">${r ? `<b>${r}</b>` : ''}</span>
       <span class="fct-h"><span class="chip">${ic(f.icone)}</span><span><span class="t">${f.nom}</span><span class="s">${f.titre}</span></span></span>
@@ -689,10 +689,10 @@ const VUES = {
 
   libre: () => tete('message-square-text', 'Racontez-nous.', 'Facultatif, mais c\'est ce qui nous aide le plus à préparer votre démonstration.') +
     `<div class="txt"><label>${ic('info')} D'autres irritants qui vous coûtent du temps ?</label><textarea id="irritants" placeholder="Ex. on ressaisit les commandes WhatsApp dans Excel, les relances se perdent…">${esc(st.libre.irritants)}</textarea></div>
-    <div class="txt"><label>${ic('sparkles')} Que voudriez-vous confier en premier à votre équipe d'Experts ?</label><textarea id="automatiser" placeholder="Ex. le suivi des impayés chaque lundi, les réponses aux questions des clients…">${esc(st.libre.automatiser)}</textarea></div>` + nav('Voir mon audit IA') + '</div>',
+    <div class="txt"><label>${ic('sparkles')} Que voudriez-vous confier en premier à votre équipe d'Experts ?</label><textarea id="automatiser" placeholder="Ex. le suivi des impayés chaque lundi, les réponses aux questions des clients…">${esc(st.libre.automatiser)}</textarea></div>` + nav('Voir mon audit') + '</div>',
 
   analyse: () => `<div class="wrap analyse"><svg viewBox="0 0 480 480">${fleur('', 92)}<circle cx="240" cy="240" r="34" fill="#E4765A"/></svg>
-    <h2>L'Audit IA analyse vos réponses.</h2><ul class="steps-a">
+    <h2>L'Auditeur analyse vos réponses.</h2><ul class="steps-a">
     <li>${ic('check')} Calcul du temps perdu, tâche par tâche</li><li>${ic('check')} Classement de vos priorités</li><li>${ic('check')} Répartition du travail dans votre équipe</li><li>${ic('check')} Montant économisé chaque mois</li></ul></div>`,
 
   resultat: () => resultat()
@@ -771,13 +771,13 @@ function resultat(){
   const date = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const num = (n, t, l) => `<div class="sec-n"><span>${n}</span><div><h3 class="sec-t">${t}</h3><p class="sec-l">${l}</p></div></div>`;
   return `<div class="wrap" id="rapport">
-    <div class="rap-h"><div><span class="eyebrow">Rapport d'audit IA</span><b>${esc(p.entreprise || 'Votre entreprise')}</b></div>
+    <div class="rap-h"><div><span class="eyebrow">Rapport de l'Auditeur d'entreprise</span><b>${esc(p.entreprise || 'Votre entreprise')}</b></div>
       <dl><div><dt>Préparé pour</dt><dd>${esc(p.nom || '')}${p.fonction ? ', ' + esc(p.fonction) : ''}</dd></div><div><dt>Secteur</dt><dd>${esc(st.secteurAutre || st.secteur || '')}</dd></div><div><dt>Taille</dt><dd>${esc(st.taille || '')}</dd></div><div><dt>Date</dt><dd>${date}</dd></div></dl></div>
     <div class="r-hero">
       <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#E0E1FF" stroke-width="12"/><circle id="ringc" cx="60" cy="60" r="52" fill="none" stroke="url(#gr)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"/><defs><linearGradient id="gr"><stop offset="0" stop-color="#8D68FA"/><stop offset="1" stop-color="#E4765A"/></linearGradient></defs></svg>
         <div class="v"><div><b class="cnt" data-to="${R.note}">0</b><small>sur 100</small></div></div></div>
       <div style="position:relative;z-index:1"><div class="eyebrow">Votre note de maturité IA</div>
-        <h2>${prenom ? esc(prenom) + ', votre' : 'Votre'} audit IA est prêt.</h2>
+        <h2>${prenom ? esc(prenom) + ', votre' : 'Votre'} audit est prêt.</h2>
         <span class="lvl">${ic('rocket')} ${R.niv.nom}</span><p>${R.niv.texte.replace(/un Expert IA/g, 'votre équipe d\'Experts IA').replace(/Un Expert IA/g, 'Votre équipe d\'Experts IA').replace(/deux Experts IA peuvent/g, 'une équipe d\'Experts IA peut')}</p></div>
     </div>
     <div class="kpis k4">
@@ -858,12 +858,12 @@ async function telecharger(b){
       const g = part.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, part.width, part.height); g.drawImage(toile, 0, -y * k);
       if (page++) pdf.addPage();
       pdf.addImage(part.toDataURL('image/jpeg', 0.92), 'JPEG', M, M, W, (fin - y) * W / larg);
-      pdf.setFontSize(8); pdf.setTextColor(147, 141, 168); pdf.text(`L'Audit IA, par Yelema  |  ${st.profil.entreprise || ''}  |  page ${page}`, M, 297 - 7);
+      pdf.setFontSize(8); pdf.setTextColor(147, 141, 168); pdf.text(`L'Auditeur d'entreprise, par Yelema  |  ${st.profil.entreprise || ''}  |  page ${page}`, M, 297 - 7);
       y = fin;
     }
     // Lien de téléchargement direct (vocal 59784) : ni fenêtre d'impression, ni nouvel onglet.
     const url = URL.createObjectURL(pdf.output('blob')), a = document.createElement('a');
-    a.href = url; a.download = 'Audit-IA-Yelema-' + (st.profil.entreprise || 'plan').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w]+/g, '-') + '.pdf';
+    a.href = url; a.download = 'Audit-Yelema-' + (st.profil.entreprise || 'plan').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w]+/g, '-') + '.pdf';
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);
   } catch (e) { console.error('PDF', e); b.insertAdjacentHTML('afterend', '<span class="pdf-err">Le PDF n\'a pas pu se préparer, réessayez dans un instant.</span>'); }
   zone.remove(); b.disabled = false; b.innerHTML = lab;
@@ -876,7 +876,7 @@ const modal = document.getElementById('ylmodal');
 function ouvrirDemo(){
   const fm = document.getElementById('ylmform'), p = st.profil, R = calcul(), f2 = D.fonctions.find(x => x.id === st.fonction2);
   fm.nom.value = p.nom || ''; fm.societe.value = p.entreprise || ''; fm.email.value = p.email || ''; fm.metier.value = METIER_SITE[st.fonction] || '';
-  fm.message.value = [`Audit IA : ${R.note}/100, ${nb(R.total)} h perdues par semaine, environ ${fcfa(R.euros)} F économisables par mois.`, 'Priorités : ' + R.prio.map(x => x.t.label).join(' ; ') + '.', f2 ? `Deuxième fonction : ${f2.nom}.` : ''].filter(Boolean).join('\n');
+  fm.message.value = [`Auditeur d'entreprise : ${R.note}/100, ${nb(R.total)} h perdues par semaine, environ ${fcfa(R.euros)} F économisables par mois.`, 'Priorités : ' + R.prio.map(x => x.t.label).join(' ; ') + '.', f2 ? `Deuxième fonction : ${f2.nom}.` : ''].filter(Boolean).join('\n');
   document.getElementById('ylm-ok').hidden = true; modal.hidden = false; document.body.style.overflow = 'hidden'; fm.querySelector('[name=tel]').focus();
 }
 function fermerDemo(){ modal.hidden = true; document.body.style.overflow = ''; }
@@ -886,8 +886,8 @@ document.getElementById('ylmform').addEventListener('submit', function(e){
   e.preventDefault();
   const d = new FormData(this), b = this.querySelector('button[type=submit]'), ok = document.getElementById('ylm-ok'), l = [];
   d.forEach((v, k) => { if (String(v).trim()) l.push(k + ' : ' + v); });
-  const charge = { _subject: 'Demande de démonstration (Audit IA), ' + (d.get('societe') || ''), 'Société': d.get('societe') || '', 'Nom': d.get('nom') || '', email: d.get('email') || '',
-    'Téléphone': String(d.get('tel') || '').trim() ? d.get('indicatif') + ' ' + String(d.get('tel')).trim() : '', 'Métier': d.get('metier') || '', 'Effectif': st.taille || '', 'Message': d.get('message') || '', Page: 'Audit IA', _captcha: 'false', _template: 'table' };
+  const charge = { _subject: 'Demande de démonstration (Auditeur d\'entreprise), ' + (d.get('societe') || ''), 'Société': d.get('societe') || '', 'Nom': d.get('nom') || '', email: d.get('email') || '',
+    'Téléphone': String(d.get('tel') || '').trim() ? d.get('indicatif') + ' ' + String(d.get('tel')).trim() : '', 'Métier': d.get('metier') || '', 'Effectif': st.taille || '', 'Message': d.get('message') || '', Page: 'Auditeur d\'entreprise', _captcha: 'false', _template: 'table' };
   b.disabled = true; b.textContent = 'Envoi en cours…';
   const rendre = () => { b.disabled = false; b.textContent = 'Demander une démo'; };
   fetch('https://formsubmit.co/ajax/contact@yelema.ai', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(charge) })
